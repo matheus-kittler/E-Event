@@ -1,5 +1,6 @@
 package com.example.e_event.view.main
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,9 +12,10 @@ import com.example.e_event.R
 
 import com.example.e_event.adapter.EventAdapter
 import com.example.e_event.model.Event
-import com.example.e_event.model.Return
+import com.example.e_event.view.details.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import kotlinx.android.synthetic.main.row_event.*
+import kotlinx.android.synthetic.main.row_event.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,12 +24,15 @@ class MainActivity : AppCompatActivity() {
         EventAdapter(this)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         supportActionBar
 
         viewModel.loadEventby()
+//        viewModel.checkDetails()TODO
+
 
         val eventObserver = Observer<List<Event>> {
             adapter.events = it
@@ -38,10 +43,21 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
-        val enterInDetailsEvent = Observer<Event> { id ->
-            id.id
 
+
+        val enterInDetailsEvent = Observer<Event> { id ->
+
+//            val event: Event = id
+//
+//            btnMore.setOnClickListener {
+//                val intent = Intent(this, DetailActivity::class.java) CRIAR HOF
+//                intent.putExtra("detail", event)
+//                setResult(Activity.RESULT_OK, intent)
+//                finish()
+//            }
         }
+
+
 
         viewModel.obj.observe(this, eventObserver)
         viewModel.eventId.observe(this, enterInDetailsEvent)

@@ -1,8 +1,9 @@
 package com.example.e_event.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class People {
+class People : Serializable {
 
     @SerializedName("picture")
     var picture: String? = null
