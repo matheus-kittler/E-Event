@@ -17,6 +17,7 @@ class MainActivityViewModel(val interaction: MainInteraction) : ViewModel() {
         Network.create<EventAPI>(EventAPI::class)
     }
 
+    //meus deus
     fun getEvent() {
         api.getEvent().enqueue(object : Callback<Event> {
             override fun onResponse(call: Call<Event>?, response: Response<Event>?) {
