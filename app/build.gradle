@@ -52,4 +52,7 @@ dependencies {
     //Mockito
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
+
+    //Viewmodels
+    implementation 'androidx.fragment:fragment-ktx:1.1.0'
 }

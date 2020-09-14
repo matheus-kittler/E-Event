@@ -2,47 +2,39 @@ package com.example.e_event.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_event.R
+
 import com.example.e_event.adapter.EventAdapter
 import com.example.e_event.model.Event
+import com.example.e_event.model.Return
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
-class MainActivity : AppCompatActivity(), MainInteraction {
+class MainActivity : AppCompatActivity() {
 
-    lateinit var event: Event
-    lateinit var viewModel : MainActivityViewModel
-
-    private val adapter by lazy {
-    EventAdapter(this).apply {
-
+    private val viewModel: MainActivityViewModel by viewModels()
+    private val adapter: EventAdapter by lazy {
+        EventAdapter(this)
     }
-}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar
 
-        viewModel = MainActivityViewModel(this)
-
-        loadScreen()
-
-        rvEventList.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-            adapter = this@MainActivity.adapter
+        val eventObserver = Observer<List<Event>> {
+            adapter.events = it
+            viewModel.loadEventby(adapter.events)
+                rvEventList.apply {
+                    layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
+                    adapter = this@MainActivity.adapter
+                }
         }
-    }
 
-    fun loadScreen() {
-        viewModel.getEvent()
-    }
-
-    override fun onLoadEvent(event: Event) {
-        return viewModel.getEvent()
-    }
-
-    override fun onError(msg: String) {
-
+       viewModel.obj.observe(this, eventObserver)
     }
 }

@@ -9,27 +9,46 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivityViewModel(val interaction: MainInteraction) : ViewModel() {
+class MainActivityViewModel() : ViewModel() {
 
-    var msg: String = "Ocorreu um erro na API"
+//    var msg: String = "Ocorreu um erro na API"
+//
+//    private val api: EventAPI by lazy {
+//        Network.create<EventAPI>(EventAPI::class)
+//    }
+//
+//    //meus deus
+//    fun loadEvent() {
+//        api.getEvent().enqueue(object : Callback<List<Event>> {
+//            override fun onResponse(call: Call<List<Event>>?, response: Response<List<Event>>?) {
+//                if (response!!.isSuccessful) {
+//                    interaction.onLoadEvent(response.body())
+//                } else {
+//                    interaction.onError(msg = msg)
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
+//                interaction.onError(msg = msg)
+//            }
+//
+//        })
+//    }
 
-    private val api: EventAPI by lazy {
-        Network.create<EventAPI>(EventAPI::class)
-    }
+    var obj: MutableLiveData<List<Event>> = MutableLiveData<List<Event>>()
+    var msg: MutableLiveData<String> = MutableLiveData<String>()
+    val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
-    //meus deus
-    fun getEvent() {
-        api.getEvent().enqueue(object : Callback<Event> {
-            override fun onResponse(call: Call<Event>?, response: Response<Event>?) {
-                if (response!!.isSuccessful) {
-                    interaction.onLoadEvent(response.body())
-                } else {
-                    interaction.onError(msg = msg)
+    fun loadEventby(e: List<Event>) {
+        service.getEvent().enqueue(object : Callback<List<Event>> {
+            override fun onResponse(call: Call<List<Event>>?, response: Response<List<Event>>?) {
+                if (response != null) {
+                    obj.value = response.body()
                 }
             }
 
-            override fun onFailure(call: Call<Event>?, t: Throwable?) {
-                interaction.onError(msg = msg)
+            override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
+                TODO("Not yet implemented")
             }
 
         })
