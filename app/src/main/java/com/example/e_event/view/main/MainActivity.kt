@@ -1,5 +1,6 @@
 package com.example.e_event.view.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -26,9 +27,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar
 
+        viewModel.loadEventby()
+
         val eventObserver = Observer<List<Event>> {
             adapter.events = it
-            viewModel.loadEventby(adapter.events)
                 rvEventList.apply {
                     layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
                     adapter = this@MainActivity.adapter
@@ -37,7 +39,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val enterInDetailsEvent = Observer<Event> { id ->
-             id.id!!
+            id.id
+
         }
 
         viewModel.obj.observe(this, eventObserver)

@@ -1,14 +1,24 @@
 package com.example.e_event.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.constraintlayout.widget.ConstraintsChangedListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.example.e_event.R
 import com.example.e_event.model.Event
+import com.example.e_event.view.details.DetailActivity
+import com.example.e_event.view.main.MainActivity
 import kotlinx.android.synthetic.main.row_event.view.*
 
 class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
@@ -38,23 +48,30 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
             tvTitle.text = event.title
             tvDescription.text = event.description
             tvPrice.text = event.price.toString()
+
+            val requestOpitons: RequestOptions by lazy {
+                RequestOptions()
+                    .error(R.drawable.ic_error_image)
+                    .transform(CenterCrop())
+
+            }
             Glide.with(context)
                 .load(event.image)
-                .centerCrop()
-                .placeholder(R.drawable.ic_error_image)
+                .apply(requestOpitons)
                 .thumbnail(0.5f)
                 .into(ivPhoto)
 
-            //TODO onclicklistener
-
-            clCardEvent.setOnClickListener {
-
+            btnMore.setOnClickListener {
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("event", event)
+                context.startActivity(intent)
             }
 
         }
 
         val uri: String = event.image.toString()
         Glide.with(holder.itemView.context).load(uri).into(holder.itemView.ivPhoto)
+
 
 //        holder.itemView.setOnClickListener {
 //            if (holder != null) {

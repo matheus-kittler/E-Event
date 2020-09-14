@@ -1,5 +1,6 @@
 package com.example.e_event.view.main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.e_event.network.Network
@@ -11,36 +12,12 @@ import retrofit2.Response
 
 class MainActivityViewModel() : ViewModel() {
 
-//    var msg: String = "Ocorreu um erro na API"
-//
-//    private val api: EventAPI by lazy {
-//        Network.create<EventAPI>(EventAPI::class)
-//    }
-//
-//    //meus deus
-//    fun loadEvent() {
-//        api.getEvent().enqueue(object : Callback<List<Event>> {
-//            override fun onResponse(call: Call<List<Event>>?, response: Response<List<Event>>?) {
-//                if (response!!.isSuccessful) {
-//                    interaction.onLoadEvent(response.body())
-//                } else {
-//                    interaction.onError(msg = msg)
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
-//                interaction.onError(msg = msg)
-//            }
-//
-//        })
-//    }
-
     var obj: MutableLiveData<List<Event>> = MutableLiveData<List<Event>>()
     var eventId: MutableLiveData<Event> = MutableLiveData<Event>()
     var msg: MutableLiveData<String> = MutableLiveData<String>()
     val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
-    fun loadEventby(e: List<Event>) {
+    fun loadEventby() {
         service.getEvent().enqueue(object : Callback<List<Event>> {
             override fun onResponse(call: Call<List<Event>>?, response: Response<List<Event>>?) {
                 if (response != null) {
@@ -49,7 +26,7 @@ class MainActivityViewModel() : ViewModel() {
             }
 
             override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
-                TODO("Not yet implemented")
+                Log.w("Error", "CAIU AQUI")
             }
 
         })
@@ -64,7 +41,7 @@ class MainActivityViewModel() : ViewModel() {
             }
 
             override fun onFailure(call: Call<Event>?, t: Throwable?) {
-                TODO("Not yet implemented")
+                Log.w("Error", "CAIU")
             }
 
         })
