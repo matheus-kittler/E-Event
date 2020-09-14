@@ -25,7 +25,7 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
         notifyDataSetChanged()
     } get() = items
 
-    var onEventDetailClickListener: ((Event, Int) -> Unit)? = null
+    private var selectedEvent: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(inflater.inflate(R.layout.row_event, parent, false))
@@ -46,6 +46,11 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
                 .into(ivPhoto)
 
             //TODO onclicklistener
+
+            clCardEvent.setOnClickListener {
+
+            }
+
         }
 
         val uri: String = event.image.toString()

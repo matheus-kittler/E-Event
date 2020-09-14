@@ -1,4 +1,4 @@
-package com.example.e_event
+package com.example.e_event.network
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder

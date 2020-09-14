@@ -32,9 +32,17 @@ class MainActivity : AppCompatActivity() {
                 rvEventList.apply {
                     layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
                     adapter = this@MainActivity.adapter
+
                 }
         }
 
-       viewModel.obj.observe(this, eventObserver)
+        val enterInDetailsEvent = Observer<Event> { id ->
+             id.id!!
+        }
+
+        viewModel.obj.observe(this, eventObserver)
+        viewModel.eventId.observe(this, enterInDetailsEvent)
+
+
     }
 }

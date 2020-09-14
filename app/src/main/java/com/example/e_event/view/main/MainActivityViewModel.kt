@@ -2,7 +2,7 @@ package com.example.e_event.view.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.e_event.Network
+import com.example.e_event.network.Network
 import com.example.e_event.model.Event
 import com.example.e_event.service.EventAPI
 import retrofit2.Call
@@ -36,6 +36,7 @@ class MainActivityViewModel() : ViewModel() {
 //    }
 
     var obj: MutableLiveData<List<Event>> = MutableLiveData<List<Event>>()
+    var eventId: MutableLiveData<Event> = MutableLiveData<Event>()
     var msg: MutableLiveData<String> = MutableLiveData<String>()
     val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
@@ -48,6 +49,21 @@ class MainActivityViewModel() : ViewModel() {
             }
 
             override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun checkDetails(id: Int) {
+        service.getDetailsEvent(id).enqueue(object : Callback<Event> {
+            override fun onResponse(call: Call<Event>?, response: Response<Event>?) {
+                if (response != null) {
+                    eventId.value = response.body()
+                }
+            }
+
+            override fun onFailure(call: Call<Event>?, t: Throwable?) {
                 TODO("Not yet implemented")
             }
 
