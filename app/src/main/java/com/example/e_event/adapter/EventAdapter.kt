@@ -24,7 +24,7 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
         notifyDataSetChanged()
     } get() = items
 
-    private var selectedEvent: Int = 0
+    var onIdEventClick: ((Event, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(inflater.inflate(R.layout.row_event, parent, false))
@@ -49,6 +49,10 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
                 .apply(requestOpitons)
                 .thumbnail(0.5f)
                 .into(ivPhoto)
+
+            holder.itemView.btnMore.setOnClickListener {
+                onIdEventClick?.invoke(event, position)
+            }
 
         }
 

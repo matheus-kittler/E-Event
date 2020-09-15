@@ -12,7 +12,12 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.details.DetailActivity"></activity>
+        <activity android:name=".view.details.DetailActivity"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.main.MainActivity"/>
+        </activity>
         <activity android:name=".view.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,5 +26,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

@@ -2,6 +2,7 @@ package com.example.e_event.view.details
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
@@ -11,11 +12,14 @@ import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
 
-    lateinit var event: Event
+    private val viewModelDetail: DetailViewModel by viewModels()
+//    private val adapter: Adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 
         var detail: Event = intent.getSerializableExtra("detail") as Event //TA NULL
         tvTitle.setText(detail.title)
@@ -29,7 +33,7 @@ class DetailActivity : AppCompatActivity() {
 
         }
         Glide.with(this)
-            .load(event.image)
+            .load(detail.image)
             .apply(requestOpitons)
             .thumbnail(0.5f)
             .into(ivPhoto)

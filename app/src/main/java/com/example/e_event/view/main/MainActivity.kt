@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.example.e_event.R
 import com.example.e_event.adapter.EventAdapter
 import com.example.e_event.model.Event
 import com.example.e_event.view.details.DetailActivity
+import com.example.e_event.view.details.DetailViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.row_event.*
 import kotlinx.android.synthetic.main.row_event.view.*
@@ -20,21 +22,29 @@ import kotlinx.android.synthetic.main.row_event.view.*
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
+    private val viewModelDetail: DetailViewModel by viewModels()
     private val adapter: EventAdapter by lazy {
-        EventAdapter(this)
+        EventAdapter(this).apply {
+            onIdEventClick = { event, _ ->
+                clLoader.visibility = View.VISIBLE
+                viewModelDetail.checkDetails(event.id!!)
+
+                event
+            }
+        }
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar
+
+        clLoader.visibility = View.VISIBLE
 
         viewModel.loadEventby()
-//        viewModel.checkDetails()TODO
-
 
         val eventObserver = Observer<List<Event>> {
+            clLoader.visibility = View.GONE
             adapter.events = it
                 rvEventList.apply {
                     layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
@@ -43,24 +53,18 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
-
-
         val enterInDetailsEvent = Observer<Event> { id ->
-
-//            val event: Event = id
-//
-//            btnMore.setOnClickListener {
-//                val intent = Intent(this, DetailActivity::class.java) CRIAR HOF
-//                intent.putExtra("detail", event)
-//                setResult(Activity.RESULT_OK, intent)
-//                finish()
-//            }
+            clLoader.visibility = View.GONE
+            val event: Event = id
+            val intent = Intent(this@MainActivity, DetailActivity::class.java)
+            intent.putExtra("detail", event)
+            setResult(Activity.RESULT_OK, intent)
+            startActivity(intent)
+            finish()
         }
 
-
-
         viewModel.obj.observe(this, eventObserver)
-        viewModel.eventId.observe(this, enterInDetailsEvent)
+        viewModelDetail.eventId.observe(this, enterInDetailsEvent)
 
 
     }
