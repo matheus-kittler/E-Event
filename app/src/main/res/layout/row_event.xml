@@ -65,7 +65,7 @@
 
         <Button
             android:id="@+id/btnMore"
-            android:text="Saiba mais"
+            android:text="@string/btn_more_row"
             android:textSize="12sp"
             android:textAllCaps="false"
             android:background="@color/transparent"

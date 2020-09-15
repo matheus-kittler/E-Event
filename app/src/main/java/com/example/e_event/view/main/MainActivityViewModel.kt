@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.e_event.network.Network
 import com.example.e_event.model.Event
-import com.example.e_event.service.EventAPI
+import com.example.e_event.network.service.EventAPI
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
