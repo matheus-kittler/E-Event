@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("detail", event)
             setResult(Activity.RESULT_OK, intent)
             startActivity(intent)
-            finish()
         }
 
         viewModel.obj.observe(this, eventObserver)

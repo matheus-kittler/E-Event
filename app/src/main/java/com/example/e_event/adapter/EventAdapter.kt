@@ -11,7 +11,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.e_event.R
 import com.example.e_event.model.Event
-import com.example.e_event.view.details.DetailActivity
 import kotlinx.android.synthetic.main.row_event.view.*
 
 class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {

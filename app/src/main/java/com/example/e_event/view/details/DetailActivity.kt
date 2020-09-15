@@ -26,6 +26,8 @@ class DetailActivity : AppCompatActivity() {
         tvDescription.setText(detail.description)
         tvDate.setText(detail.date)
         tvPrice.setText(detail.price.toString())
+        tvLatitude.setText(detail.latitude)
+        tvLongitude.setText(detail.longitude)
         val requestOpitons: RequestOptions by lazy {
             RequestOptions()
                 .error(R.drawable.ic_error_image)
