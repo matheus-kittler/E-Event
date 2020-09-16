@@ -1,8 +1,11 @@
 package com.example.e_event.view.details
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +15,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.e_event.R
 import com.example.e_event.adapter.DetailAdapter
 import com.example.e_event.model.Event
+import com.example.e_event.model.People
 import com.example.e_event.view.share.ShareActivity
 import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_share.view.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -28,7 +33,7 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
-        var detail: Event = intent.getSerializableExtra("detail") as Event //TA NULL
+        var detail: Event = intent.getSerializableExtra("detail") as Event
         tvTitle.setText(detail.title)
         tvDescription.setText(detail.description)
         tvDate.setText(detail.date)
@@ -57,15 +62,32 @@ class DetailActivity : AppCompatActivity() {
         ibShare.setOnClickListener {
 
             val intent = Intent(this@DetailActivity, ShareActivity::class.java)
+            intent.putExtra("detail", detail)
+            setResult(Activity.RESULT_OK, intent)
             startActivity(intent)
 
         }
 
-//        val checkInNameObserver = Observer<People> { p ->
-//            p.name                                            PRECISA DA DIALOG
+//        fun showMessageBox(id: Int, name: People){
+//
+//            //Inflate the dialog as custom view
+//            val messageBoxView = LayoutInflater.from(this).inflate(R.layout.activity_detail, null)
+//
+//            //AlertDialogBuilder
+//            val messageBoxBuilder = AlertDialog.Builder(this).setView(messageBoxView)
+//
+//            //setting text values
+//            messageBoxView.etName.text = name.name
+//            messageBoxView.etEmail.text = email
+//
+//            //show dialog
+//            val  messageBoxInstance = messageBoxBuilder.show()
+//
+//            //set Listener
+//            messageBoxView.setOnClickListener(){
+//                //close dialog
+//                messageBoxInstance.dismiss()
+//            }
 //        }
-
-//        viewModelDetail.checkInName.observe(this, )
-
     }
 }

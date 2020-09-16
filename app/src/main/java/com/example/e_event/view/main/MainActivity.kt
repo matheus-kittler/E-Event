@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity() {
             onIdEventClick = { event, _ ->
                 clLoader.visibility = View.VISIBLE
                 viewModelDetail.checkDetails(event.id!!)
-
-                event
             }
         }
     }
@@ -64,7 +62,5 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.obj.observe(this, eventObserver)
         viewModelDetail.eventId.observe(this, enterInDetailsEvent)
-
-
     }
 }

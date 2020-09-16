@@ -14,9 +14,6 @@ import retrofit2.Response
 class DetailViewModel : ViewModel() {
 
     var eventId: MutableLiveData<Event> = MutableLiveData<Event>()
-    var currentIdEvent: MutableLiveData<People> = MutableLiveData()
-    var checkInName: MutableLiveData<String> = MutableLiveData<String>()
-    var checkInEmail: MutableLiveData<String> = MutableLiveData<String>()
     val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
     fun checkDetails(id: Int) {
@@ -34,18 +31,5 @@ class DetailViewModel : ViewModel() {
         })
     }
 
-    fun checkIn(id: Int, name: String, email: String) {
-        service.checkInEvent(id, name, email).enqueue(object : Callback<People> {
-            override fun onResponse(call: Call<People>?, response: Response<People>?) {
-                if (response != null) {
-                    currentIdEvent.value = response.body()
-                }
-            }
 
-            override fun onFailure(call: Call<People>?, t: Throwable?) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
 }
