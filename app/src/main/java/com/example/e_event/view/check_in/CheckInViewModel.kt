@@ -12,7 +12,7 @@ import retrofit2.Response
 
 class CheckInViewModel : ViewModel() {
 
-    var currentIdEvent: MutableLiveData<People> = MutableLiveData()//vai fazer o service trabalhar com o OBJ que eu pegar
+    var currentIdEvent: MutableLiveData<People> = MutableLiveData()
     var save: MutableLiveData<People> = MutableLiveData()
     val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
@@ -25,7 +25,7 @@ class CheckInViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<People>?, t: Throwable?) {
-                Log.w("CRASH", "NÃO FUNFOU")
+                Log.w("Error", "CAIU AQUI")
             }
 
         })
