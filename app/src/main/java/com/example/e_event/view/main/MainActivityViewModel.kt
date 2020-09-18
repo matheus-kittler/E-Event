@@ -13,7 +13,6 @@ import retrofit2.Response
 class MainActivityViewModel() : ViewModel() {
 
     var obj: MutableLiveData<List<Event>> = MutableLiveData<List<Event>>()
-    var msg: MutableLiveData<String> = MutableLiveData<String>()
     val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
     fun loadEventby() {
@@ -25,7 +24,7 @@ class MainActivityViewModel() : ViewModel() {
             }
 
             override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
-                Log.w("Error", "CAIU AQUI")
+                Log.d("Error", "CAIU AQUI")
             }
 
         })

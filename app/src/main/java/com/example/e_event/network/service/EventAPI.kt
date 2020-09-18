@@ -20,7 +20,7 @@ interface EventAPI {
 
     @POST("events/checkin")
     fun checkInEvent(
-        @Body id: Int,
+        @Body eventId: Int,
         @Body name: String,
         @Body email: String
     ) : Call<People>

@@ -1,11 +1,9 @@
 package com.example.e_event.view.details
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +13,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.e_event.R
 import com.example.e_event.adapter.DetailAdapter
 import com.example.e_event.model.Event
-import com.example.e_event.model.People
-import com.example.e_event.view.share.ShareActivity
+import com.example.e_event.view.map.MapsActivity
+import com.example.e_event.view.check_in.CheckInActivity
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.activity_share.view.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -38,56 +36,50 @@ class DetailActivity : AppCompatActivity() {
         tvDescription.setText(detail.description)
         tvDate.setText(detail.date)
         tvPrice.setText(detail.price.toString())
-        tvLatitude.setText(detail.latitude)
-        tvLongitude.setText(detail.longitude)
         adapter.peoples = detail.people
 
         rvPeople.apply {
             layoutManager = LinearLayoutManager(this@DetailActivity, RecyclerView.VERTICAL, false)
             adapter = this@DetailActivity.adapter
-
-            val requestOpitons: RequestOptions by lazy {
-                RequestOptions()
-                    .error(R.drawable.ic_error_image)
-                    .transform(CenterCrop())
-
-            }
-            Glide.with(this)
-                .load(detail.image)
-                .apply(requestOpitons)
-                .thumbnail(0.5f)
-                .into(ivPhoto)
         }
 
-        ibShare.setOnClickListener {
+        val requestOpitons: RequestOptions by lazy {
+            RequestOptions()
+                .error(R.drawable.ic_error_image)
+                .transform(CenterCrop())
 
-            val intent = Intent(this@DetailActivity, ShareActivity::class.java)
+        }
+        Glide.with(this)
+            .load(detail.image)
+            .apply(requestOpitons)
+            .thumbnail(0.5f)
+            .into(ivPhoto)
+
+        ibCheckIn.setOnClickListener {
+
+            val intent = Intent(this@DetailActivity, CheckInActivity::class.java)
             intent.putExtra("detail", detail)
             setResult(Activity.RESULT_OK, intent)
             startActivity(intent)
-
         }
 
-//        fun showMessageBox(id: Int, name: People){
-//
-//            //Inflate the dialog as custom view
-//            val messageBoxView = LayoutInflater.from(this).inflate(R.layout.activity_detail, null)
-//
-//            //AlertDialogBuilder
-//            val messageBoxBuilder = AlertDialog.Builder(this).setView(messageBoxView)
-//
-//            //setting text values
-//            messageBoxView.etName.text = name.name
-//            messageBoxView.etEmail.text = email
-//
-//            //show dialog
-//            val  messageBoxInstance = messageBoxBuilder.show()
-//
-//            //set Listener
-//            messageBoxView.setOnClickListener(){
-//                //close dialog
-//                messageBoxInstance.dismiss()
-//            }
-//        }
+        ibShare.setOnClickListener {
+            val location: String = detail.latitude.toString()
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_LOCAL_ONLY, location)
+            intent.type = "text/plain"
+
+            startActivity(Intent.createChooser(intent, "Compartilhe este evento : "))
+        }
+
+
+        ivPhoto.setOnClickListener {
+            val event: Event = detail
+            val intent = Intent(this@DetailActivity, MapsActivity::class.java)
+            intent.putExtra("location", event)
+            startActivity(intent)
+        }
+
     }
 }

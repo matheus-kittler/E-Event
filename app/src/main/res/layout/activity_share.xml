@@ -6,7 +6,7 @@
     android:background="@color/transparent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.share.ShareActivity">
+    tools:context=".view.check_in.CheckInActivity">
 
 
         <TextView
@@ -44,6 +44,7 @@
             android:hint="@string/et_email_fragment"
             android:paddingStart="15dp"
             android:inputType="textEmailAddress"
+            android:imeOptions="actionDone"
             android:background="@drawable/form_edit_text"
             android:padding="5dp"
             android:layout_width="match_parent"

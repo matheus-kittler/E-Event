@@ -2,13 +2,20 @@ package com.example.e_event.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.nfc.Tag
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.example.e_event.R
 import com.example.e_event.model.Event
 import kotlinx.android.synthetic.main.row_event.view.*
@@ -37,16 +44,36 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
             tvDescription.text = event.description
             tvPrice.text = event.price.toString()
 
-            val requestOpitons: RequestOptions by lazy {
-                RequestOptions()
-                    .error(R.drawable.ic_error_image)
-                    .transform(CenterCrop())
-
-            }
+//            val requestOpitons: RequestOptions by lazy {
+//                RequestOptions()
+//                    .error(R.drawable.ic_error_image)
+//                    .transform(CenterCrop())
+//
+//            }
             Glide.with(context)
                 .load(event.image)
-                .apply(requestOpitons)
-                .thumbnail(0.5f)
+//                .apply(requestOpitons)
+                .error(R.drawable.ic_error_image)
+                .listener(object: RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+                })
                 .into(ivPhoto)
 
             holder.itemView.btnMore.setOnClickListener {

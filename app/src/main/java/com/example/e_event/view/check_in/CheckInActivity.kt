@@ -1,22 +1,18 @@
-package com.example.e_event.view.share
+package com.example.e_event.view.check_in
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.example.e_event.R
 import com.example.e_event.model.Event
 import com.example.e_event.model.People
 import kotlinx.android.synthetic.main.activity_share.*
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
-class ShareActivity : AppCompatActivity() {
+class CheckInActivity : AppCompatActivity() {
 
-    private val viewModelShare: ShareViewModel by viewModels()
+    private val viewModelCheckIn: CheckInViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,16 +20,15 @@ class ShareActivity : AppCompatActivity() {
 
         var detail: Event = intent.getSerializableExtra("detail") as Event
 
+
         val checkEventObserver = Observer<People> { p ->
-            clLoaderCheckIn.visibility = View.GONE
-            finish()
+            p.eventId = detail.id
         }
 
-        viewModelShare.currentIdEvent.observe(this, checkEventObserver)
+        viewModelCheckIn.currentIdEvent.observe(this, checkEventObserver)
 
         btnConfirm.setOnClickListener {
-            clLoaderCheckIn.visibility = View.VISIBLE
-            viewModelShare.checkIn(detail.id!!, etName.text.toString(), etEmail.text.toString())
+            viewModelCheckIn.checkIn(detail.id!!, etName.text.toString(), etEmail.text.toString())
         }
     }
 }

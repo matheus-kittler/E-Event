@@ -1,5 +1,6 @@
-package com.example.e_event.view.share
+package com.example.e_event.view.check_in
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.e_event.model.People
@@ -9,10 +10,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ShareViewModel : ViewModel() {
+class CheckInViewModel : ViewModel() {
 
     var currentIdEvent: MutableLiveData<People> = MutableLiveData()//vai fazer o service trabalhar com o OBJ que eu pegar
-    var infoName: MutableLiveData<String> = MutableLiveData()
+    var save: MutableLiveData<People> = MutableLiveData()
     val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
     fun checkIn(id: Int, name: String, email: String) {
@@ -24,7 +25,7 @@ class ShareViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<People>?, t: Throwable?) {
-                infoName.value = "alo"
+                Log.w("CRASH", "NÃO FUNFOU")
             }
 
         })
