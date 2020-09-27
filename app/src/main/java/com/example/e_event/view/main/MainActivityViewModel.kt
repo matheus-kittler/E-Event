@@ -10,10 +10,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivityViewModel() : ViewModel() {
+class MainActivityViewModel(
+    private val service: EventAPI = Network.getInstance(EventAPI::class.java)
+        .build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
+) : ViewModel() {
 
     var obj: MutableLiveData<List<Event>> = MutableLiveData<List<Event>>()
-    val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
+    var error: MutableLiveData<String> = MutableLiveData<String>()
+
 
     fun loadEventby() {
         service.getEvent().enqueue(object : Callback<List<Event>> {
@@ -24,9 +28,8 @@ class MainActivityViewModel() : ViewModel() {
             }
 
             override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
-                Log.d("Error", "CAIU AQUI")
+                error.value = t?.message
             }
-
         })
     }
 }
