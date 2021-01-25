@@ -6,12 +6,12 @@ import java.io.Serializable
 class Event : Serializable {
 
     @SerializedName("people")
-    var people: People? = null
+    var people: List<People> = listOf()
     @SerializedName("date")
     var date: String? = null
     @SerializedName("description")
     var description: String? = null
-    @SerializedName("description")
+    @SerializedName("image")
     var image: String? = null
     @SerializedName("longitude")
     var longitude: String? = null
@@ -24,7 +24,7 @@ class Event : Serializable {
     @SerializedName("id")
     var id: Int? = null
 
-    constructor(people: People?,
+    constructor(people: List<People>?,
                 date: String?,
                 description: String?,
                 image: String?,
@@ -34,7 +34,9 @@ class Event : Serializable {
                 title: String?,
                 id: Int?) {
 
-        this.people = people
+        if (people != null) {
+            this.people = people
+        }
         this.date = date
         this.description = description
         this.image = image

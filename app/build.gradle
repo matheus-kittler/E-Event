@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.e_event"
-        minSdkVersion 29
+        minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -40,16 +40,24 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation 'android.arch.core:core-testing:1.1.1'
 
 
     //Retrofit
     implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
+
     //Mockito
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
+    testImplementation "org.mockito:mockito-core:3.1.0"
+    testImplementation "org.mockito:mockito-inline:3.1.0"
+
+    //Viewmodels
+    implementation 'androidx.fragment:fragment-ktx:1.1.0'
 }

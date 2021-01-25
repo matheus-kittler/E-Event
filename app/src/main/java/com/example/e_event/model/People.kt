@@ -1,8 +1,9 @@
 package com.example.e_event.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class People {
+class People : Serializable {
 
     @SerializedName("picture")
     var picture: String? = null
@@ -12,12 +13,15 @@ class People {
     var eventId: Int? = null
     @SerializedName("id")
     var id: Int? = null
+    @SerializedName("email")
+    var email: String? = null
 
     constructor(picture: String?, name: String?,
-    eventId: Int?, id: Int?) {
+    eventId: Int?, id: Int?, email: String?) {
         this.picture = picture
         this.name = name
         this.eventId = eventId
         this.id = id
+        this.email = email
     }
 }

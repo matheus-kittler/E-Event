@@ -1,22 +1,27 @@
 package com.example.e_event.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.nfc.Tag
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.example.e_event.R
 import com.example.e_event.model.Event
 import kotlinx.android.synthetic.main.row_event.view.*
 
 class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
-//    lateinit var context: Context
-//    lateinit var events: ArrayList<Event>
-//    lateinit var inflater: LayoutInflater
-//    lateinit var onEventDetailClickListener: OnEventDetailClickListener
     private val inflater = LayoutInflater.from(context)
     private var items: ArrayList<Event> = ArrayList()
 
@@ -25,7 +30,7 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
         notifyDataSetChanged()
     } get() = items
 
-    var onEventDetailClickListener: ((Event, Int) -> Unit)? = null
+    var onIdEventClick: ((Event, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(inflater.inflate(R.layout.row_event, parent, false))
@@ -38,18 +43,48 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
             tvTitle.text = event.title
             tvDescription.text = event.description
             tvPrice.text = event.price.toString()
+
+//            val requestOpitons: RequestOptions by lazy {
+//                RequestOptions()
+//                    .error(R.drawable.ic_error_image)
+//                    .transform(CenterCrop())
+//
+//            }
             Glide.with(context)
                 .load(event.image)
-                .centerCrop()
-                .placeholder(R.drawable.ic_error_image)
-                .thumbnail(0.5f)
+//                .apply(requestOpitons)
+                .error(R.drawable.ic_error_image)
+                .listener(object: RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        return false
+                    }
+                })
                 .into(ivPhoto)
 
-            //TODO onclicklistener
+            holder.itemView.btnMore.setOnClickListener {
+                onIdEventClick?.invoke(event, position)
+            }
+
         }
 
         val uri: String = event.image.toString()
         Glide.with(holder.itemView.context).load(uri).into(holder.itemView.ivPhoto)
+
 
 //        holder.itemView.setOnClickListener {
 //            if (holder != null) {
