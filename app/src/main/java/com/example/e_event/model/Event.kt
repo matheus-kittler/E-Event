@@ -8,7 +8,7 @@ class Event : Serializable {
     @SerializedName("people")
     var people: List<People> = listOf()
     @SerializedName("date")
-    var date: String? = null
+    var date: Long? = null
     @SerializedName("description")
     var description: String? = null
     @SerializedName("image")
@@ -25,7 +25,7 @@ class Event : Serializable {
     var id: Int? = null
 
     constructor(people: List<People>?,
-                date: String?,
+                date: Long?,
                 description: String?,
                 image: String?,
                 longitude: String?,

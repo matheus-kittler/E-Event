@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,12 +42,11 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadEventby()
 
         val eventObserver = Observer<List<Event>> {
-            clLoader.visibility = View.GONE
             adapter.events = it
                 rvEventList.apply {
                     layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
                     adapter = this@MainActivity.adapter
-
+                    delayScreen()
                 }
         }
 
@@ -62,5 +61,26 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.obj.observe(this, eventObserver)
         viewModelDetail.eventId.observe(this, enterInDetailsEvent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        delayScreen()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        delayScreen()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        delayScreen()
+    }
+
+    fun delayScreen() {
+        rvEventList.postDelayed({
+            clLoader.visibility = View.GONE
+        }, 4000)
     }
 }

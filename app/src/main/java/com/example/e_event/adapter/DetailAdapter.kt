@@ -8,7 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.e_event.R
 import com.example.e_event.model.People
+import kotlinx.android.synthetic.main.row_event.view.*
 import kotlinx.android.synthetic.main.row_people_check.view.*
+import kotlinx.android.synthetic.main.row_people_check.view.ivPhoto
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DetailAdapter(private val context: Context) : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
 

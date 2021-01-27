@@ -5,4 +5,5 @@
     <string name="btn_more_row">Saiba mais...</string>
     <string name="btn_confirm">Confirmar</string>
     <string name="title_activity_maps">Map</string>
+    <string name="ticket_value_txt">Valor da Entrada R$:</string>
 </resources>
