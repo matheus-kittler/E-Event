@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
             val event: Event = id
             val intent = Intent(this@MainActivity, DetailActivity::class.java)
             intent.putExtra("detail", event)
-            setResult(Activity.RESULT_OK, intent)
             startActivity(intent)
         }
 

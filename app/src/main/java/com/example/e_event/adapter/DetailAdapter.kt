@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class DetailAdapter(private val context: Context) : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
+class DetailAdapter(context: Context) : RecyclerView.Adapter<DetailAdapter.DetailViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
     private var items: ArrayList<People> = ArrayList()
@@ -34,11 +34,6 @@ class DetailAdapter(private val context: Context) : RecyclerView.Adapter<DetailA
 
         holder.itemView.apply {
             tvName.text = people.name
-
-            Glide.with(context)
-                .load(people.picture)
-                .thumbnail(0.5f)
-                .into(ivPhoto)
         }
 
         val uri: String = people.picture.toString()

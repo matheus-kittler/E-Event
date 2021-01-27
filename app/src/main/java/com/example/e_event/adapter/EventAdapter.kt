@@ -45,48 +45,40 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
             tvDescription.text = event.description
             tvPrice.text = event.price.toString().replace(".", ",").replaceAfter("0", "0")
 
-//            val requestOpitons: RequestOptions by lazy {
-//                RequestOptions()
-//                    .error(R.drawable.ic_error_image)
-//                    .transform(CenterCrop())
-//
-//            }
-            Glide.with(context)
-                .load(event.image)
-                .placeholder(R.drawable.ic_error_image)
-                .error(R.drawable.ic_error_image)
-                .listener(object: RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
-                })
-                .into(ivPhoto)
-
             holder.itemView.btnMore.setOnClickListener {
                 onIdEventClick?.invoke(event, position)
             }
 
         }
 
-        val uri: String = event.image.toString()
-        Glide.with(holder.itemView.context)
-            .load(uri)
+//        val uri: String = event.image.toString()
+//        Glide.with(holder.itemView.context)
+//            .load(uri)
+//            .error(R.drawable.ic_error_image)
+//            .into(holder.itemView.ivPhoto)
+
+        Glide.with(context)
+            .load(event.image)
             .error(R.drawable.ic_error_image)
+            .listener(object: RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+            })
             .into(holder.itemView.ivPhoto)
 
 //        holder.itemView.setOnClickListener {

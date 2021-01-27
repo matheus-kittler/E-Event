@@ -1,5 +1,6 @@
 package com.example.e_event.network.service
 
+import com.example.e_event.model.CheckIn
 import com.example.e_event.model.Event
 import com.example.e_event.model.People
 import retrofit2.Call
@@ -18,10 +19,10 @@ interface EventAPI {
         @Path("id") zipId: Int
     ) :Call<Event>
 
-    @POST("events/checkin")
+    @POST("checkin")
     fun checkInEvent(
         @Body eventId: Int,
         @Body name: String,
         @Body email: String
-    ) : Call<People>
+    ) : Call<CheckIn>
 }
