@@ -14,11 +14,10 @@ import retrofit2.Response
 class CheckInViewModel : ViewModel() {
 
     var currentIdEvent: MutableLiveData<CheckIn> = MutableLiveData<CheckIn>()
-    var save: MutableLiveData<People> = MutableLiveData()
-    val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
+    private val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
-    fun checkIn(id: Int, name: String, email: String) {
-        service.checkInEvent(id, name, email).enqueue(object : Callback<CheckIn> {
+    fun checkIn(checkIn: CheckIn) {
+        service.checkInEvent(checkIn).enqueue(object : Callback<CheckIn> {
             override fun onResponse(call: Call<CheckIn>?, response: Response<CheckIn>?) {
                 if (response != null) {
                     currentIdEvent.value = response.body()

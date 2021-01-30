@@ -2,8 +2,9 @@
     <string name="app_name">E-Event</string>
     <string name="et_name_fragment">Nome</string>
     <string name="et_email_fragment">E-mail</string>
-    <string name="btn_more_row">Saiba mais...</string>
+    <string name="btn_more_row">Saiba mais…</string>
     <string name="btn_confirm">Confirmar</string>
     <string name="title_activity_maps">Map</string>
-    <string name="ticket_value_txt">Valor da Entrada R$:</string>
+    <string name="ticket_value_txt">Valor da Entrada R$</string>
+    <string name="syphra">R$</string>
 </resources>

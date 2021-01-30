@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,25 +42,28 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadEventby()
 
-        val eventObserver = Observer<List<Event>> {
-            adapter.events = it
-                rvEventList.apply {
-                    layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-                    adapter = this@MainActivity.adapter
-                    delayScreen()
-                }
-        }
+            val eventObserver = Observer<List<Event>> {
+                    adapter.events = it
+                    rvEventList.apply {
+                        layoutManager =
+                            LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
+                        adapter = this@MainActivity.adapter
+                        delayScreen()
+                    }
 
-        val enterInDetailsEvent = Observer<Event> { id ->
-            clLoader.visibility = View.GONE
-            val event: Event = id
-            val intent = Intent(this@MainActivity, DetailActivity::class.java)
-            intent.putExtra("detail", event)
-            startActivity(intent)
-        }
+            }
 
-        viewModel.obj.observe(this, eventObserver)
-        viewModelDetail.eventId.observe(this, enterInDetailsEvent)
+            val enterInDetailsEvent = Observer<Event> { id ->
+                clLoader.visibility = View.GONE
+                val event: Event = id
+                val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra("detail", event)
+                startActivity(intent)
+            }
+            viewModel.obj.observe(this, eventObserver)
+            viewModelDetail.eventId.observe(this, enterInDetailsEvent)
+
+
     }
 
     override fun onStart() {

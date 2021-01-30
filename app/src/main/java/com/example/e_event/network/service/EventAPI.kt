@@ -4,10 +4,7 @@ import com.example.e_event.model.CheckIn
 import com.example.e_event.model.Event
 import com.example.e_event.model.People
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface EventAPI {
 
@@ -20,9 +17,5 @@ interface EventAPI {
     ) :Call<Event>
 
     @POST("checkin")
-    fun checkInEvent(
-        @Body eventId: Int,
-        @Body name: String,
-        @Body email: String
-    ) : Call<CheckIn>
+    fun checkInEvent(@Body checkIn: CheckIn) : Call<CheckIn>
 }
