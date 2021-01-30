@@ -14,6 +14,7 @@ import retrofit2.Response
 class DetailViewModel : ViewModel() {
 
     var eventId: MutableLiveData<Event> = MutableLiveData<Event>()
+    var error: MutableLiveData<String> = MutableLiveData<String>()
     val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
     fun checkDetails(id: Int) {
@@ -25,9 +26,8 @@ class DetailViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<Event>?, t: Throwable?) {
-                Log.w("Error", "CAIU")
+                error.value = t?.message
             }
-
         })
     }
 

@@ -1,6 +1,7 @@
 package com.example.e_event.view.main
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,28 +43,30 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.loadEventby()
 
-            val eventObserver = Observer<List<Event>> {
-                    adapter.events = it
-                    rvEventList.apply {
-                        layoutManager =
-                            LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-                        adapter = this@MainActivity.adapter
-                        delayScreen()
-                    }
-
+        val eventObserver = Observer<List<Event>> {
+            adapter.events = it
+            rvEventList.apply {
+                layoutManager =
+                    LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
+                    adapter = this@MainActivity.adapter
+                delayScreen()
             }
+        }
 
-            val enterInDetailsEvent = Observer<Event> { id ->
-                clLoader.visibility = View.GONE
-                val event: Event = id
-                val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("detail", event)
-                startActivity(intent)
-            }
-            viewModel.obj.observe(this, eventObserver)
-            viewModelDetail.eventId.observe(this, enterInDetailsEvent)
+        val errorObserver = Observer<String> {
+            alertDialogError(it)
+        }
 
-
+        val enterInDetailsEvent = Observer<Event> { id ->
+            clLoader.visibility = View.GONE
+            val event: Event = id
+            val intent = Intent(this@MainActivity, DetailActivity::class.java)
+            intent.putExtra("detail", event)
+            startActivity(intent)
+        }
+        viewModel.obj.observe(this, eventObserver)
+        viewModel.error.observe(this, errorObserver)
+        viewModelDetail.eventId.observe(this, enterInDetailsEvent)
     }
 
     override fun onStart() {
@@ -85,5 +88,14 @@ class MainActivity : AppCompatActivity() {
         rvEventList.postDelayed({
             clLoader.visibility = View.GONE
         }, 4000)
+    }
+
+    private fun alertDialogError(error: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            .setTitle("Erro!")
+            .setMessage(error)
+            .setNeutralButton("Ok", null).also {
+                it.create().show()
+            }
     }
 }

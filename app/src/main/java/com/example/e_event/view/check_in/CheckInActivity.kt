@@ -19,8 +19,6 @@ class CheckInActivity : AppCompatActivity() {
     private val viewModelCheckIn: CheckInViewModel by viewModels()
     private val checkIn = CheckIn()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)

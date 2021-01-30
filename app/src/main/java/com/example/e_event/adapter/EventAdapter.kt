@@ -51,12 +51,6 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
 
         }
 
-//        val uri: String = event.image.toString()
-//        Glide.with(holder.itemView.context)
-//            .load(uri)
-//            .error(R.drawable.ic_error_image)
-//            .into(holder.itemView.ivPhoto)
-
         Glide.with(context)
             .load(event.image)
             .error(R.drawable.ic_error_image)
@@ -81,18 +75,10 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
             })
             .into(holder.itemView.ivPhoto)
 
-//        holder.itemView.setOnClickListener {
-//            if (holder != null) {
-//                onEventDetailClickListener.onEventDetailClick(event, position)
-//            }
-//        }
     }
 
     override fun getItemCount(): Int = events.size
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    interface OnEventDetailClickListener {
-        fun onEventDetailClick(event: Event, index: Int)
-    }
 }

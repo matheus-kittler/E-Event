@@ -1,5 +1,6 @@
 package com.example.e_event.view.details
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
@@ -38,7 +39,6 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         delayScreen()
-
         getDataField()
 
         rvPeople.apply {
@@ -98,6 +98,7 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this@DetailActivity, CheckInActivity::class.java)
             intent.putExtra("detail", detail)
             startActivityForResult(intent, EVENT)
+
         }
 
         ibShare.setOnClickListener {
@@ -121,5 +122,14 @@ class DetailActivity : AppCompatActivity() {
             intent.putExtra("location", event)
             startActivity(intent)
         }
+    }
+
+    private fun alertDialogError(error: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            .setTitle("Erro!")
+            .setMessage(error)
+            .setNeutralButton("Ok", null).also {
+                it.create().show()
+            }
     }
 }
