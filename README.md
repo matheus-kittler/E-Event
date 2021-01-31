@@ -16,14 +16,14 @@ Após abrir o Android Studio vá em File > Open... > pasta onde você clonou o a
 
 caso não saiba executar um app:
 
-```bash
-https://developer.android.com/training/basics/firstapp/running-app?hl=pt-br
-```
+
+[Executar em um dispositivo real](https://developer.android.com/training/basics/firstapp/running-app?hl=pt-br)
+
 e
-```bash
-https://developer.android.com/studio/run/emulator?hl=pt-br
-```
-*OBS*: Cuidado com o ip de sua máquina para rodar o app no emulador, se estiver apontando para alguma VPN empresarial o app não conseguirá consumir a API
+
+[Executar um app no Android Emulator](https://developer.android.com/studio/run/emulator?hl=pt-br)
+
+*OBS*: Cuidado com o ip de sua máquina para rodar o app no emulador, se estiver apontando para alguma VPN empresarial o app não conseguirá consumir a API!
 
 # Arquitetura e Frameworks
 
