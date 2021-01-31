@@ -13,7 +13,8 @@ git clone https://github.com/matheus-kittler/E-Event.git
 
 Agora com o projeto em sua máquina, seria interessante utilizar o Android Studio para ver os fonts e também para emular o app.
 Após abrir o Android Studio vá em File > Open... > pasta onde você clonou o app quando utilizou o git bash ou terminal.
-caso não saiba emular:
+
+caso não saiba executar um app:
 
 ```bash
 https://developer.android.com/training/basics/firstapp/running-app?hl=pt-br
