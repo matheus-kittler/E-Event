@@ -23,7 +23,7 @@ e
 ```bash
 https://developer.android.com/studio/run/emulator?hl=pt-br
 ```
-*OBS* Cuidado com o ip de sua máquina para rodar o app no emulador, se estiver apontando para alguma VPN empresarial o app não conseguirá consumir a API
+*OBS: Cuidado com o ip de sua máquina para rodar o app no emulador, se estiver apontando para alguma VPN empresarial o app não conseguirá consumir a API
 
 # Arquitetura e Frameworks
 
