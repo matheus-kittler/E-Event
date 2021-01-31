@@ -7,10 +7,21 @@ Projeto que mostra eventos onde o usuário pode ver a descrição, data, valor e
 Primeiro, abra seu git bash ou terminal preferido, depois disso, execute este comando:
 
 ```bash
-git clone:
+git clone https://github.com/matheus-kittler/E-Event.git
 ```
 
-Agora com o projeto em sua máquina, seria interessante utilizar o Android Studios para ver os fonts e também para emular o app.
+
+Agora com o projeto em sua máquina, seria interessante utilizar o Android Studio para ver os fonts e também para emular o app.
+Após abrir o Android Studio vá em File > Open... > pasta onde você clonou o app quando utilizou o git bash ou terminal.
+caso não saiba emular:
+
+```bash
+https://developer.android.com/training/basics/firstapp/running-app?hl=pt-br
+```
+e
+```bash
+https://developer.android.com/studio/run/emulator?hl=pt-br
+```
 
 # Arquitetura e Frameworks
 
