@@ -70,7 +70,7 @@ class MainActivityViewModelTest {
 
         whenever(
             call.enqueue(any())
-        ).then{
+        ).then {
             it.getArgument<Callback<List<Event>>>(0).onResponse(mock(), dummyResult)
         }// controle para que o metodo chame o onResponse
 
@@ -106,7 +106,7 @@ class MainActivityViewModelTest {
 
         whenever(
             call.enqueue(any())
-        ).then{
+        ).then {
             it.getArgument<Callback<List<Event>>>(0).onFailure(mock(), Throwable(errorMessage))
         }// controle para que o metodo chame o onResponse
 
@@ -146,7 +146,7 @@ class MainActivityViewModelTest {
 
         whenever(
             call.enqueue(any())
-        ).then{
+        ).then {
             it.getArgument<Callback<List<Event>>>(0).onResponse(mock(), null)
         }// controle para que o metodo chame o onResponse
 

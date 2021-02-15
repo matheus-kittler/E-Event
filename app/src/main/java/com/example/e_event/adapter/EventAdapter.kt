@@ -12,6 +12,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.e_event.R
+import com.example.e_event.databinding.RowEventBinding
 import com.example.e_event.model.Event
 import kotlinx.android.synthetic.main.row_event.view.*
 import java.text.DateFormat
@@ -19,21 +20,25 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+class EventAdapter(private val context: Context) :
+    RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
     private var items: ArrayList<Event> = ArrayList()
     private val DATE_FORMAT = "dd/MM/yyyy"
 
-    var events: List<Event> set(value) {
-        items = ArrayList(value)
-        notifyDataSetChanged()
-    } get() = items
+    var events: List<Event>
+        set(value) {
+            items = ArrayList(value)
+            notifyDataSetChanged()
+        }
+        get() = items
 
     var onIdEventClick: ((Event, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
         return EventViewHolder(inflater.inflate(R.layout.row_event, parent, false))
+        val binding = RowEventBinding
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
@@ -54,7 +59,7 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
         Glide.with(context)
             .load(event.image)
             .error(R.drawable.ic_error_image)
-            .listener(object: RequestListener<Drawable> {
+            .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
@@ -63,6 +68,7 @@ class EventAdapter(private val context: Context) : RecyclerView.Adapter<EventAda
                 ): Boolean {
                     return false
                 }
+
                 override fun onResourceReady(
                     resource: Drawable?,
                     model: Any?,
