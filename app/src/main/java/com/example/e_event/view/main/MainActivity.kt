@@ -2,6 +2,7 @@ package com.example.e_event.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -30,19 +31,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding by lazy {
+        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).run {
+            lifecycleOwner = this@MainActivity
+            viewModel = mainViewModel
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil
-            .setContentView(this, R.layout.activity_main)
-
-        binding.rvEventList.apply { adapter = this@MainActivity.adapter
-            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        }
 
         mainViewModel.eventList.observe(this, Observer {
-            adapter.items = (it ?: arrayListOf()) as ArrayList<Event>
+            Log.e("MainActivity", it.toString())
         })
     }
 }
