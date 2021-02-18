@@ -3,11 +3,11 @@
 
     <data>
 
-        <import type="com.example.e_event.model.Event"/>
 
+        <import type="android.view.View"/>
         <variable
-            name="event"
-            type="Event" />
+            name="viewModel"
+            type="com.example.e_event.view.main.MainActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,26 +27,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/row_event" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clLoader"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/transparentLoader"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -22,8 +22,7 @@ class Event(
 ) : Parcelable {
 
     fun getPriceEvent() : String {
-        val value = price
-        return value.toString().replace(".", ",").replaceAfter("0", "0")
+        return price.toString().replace(".", ",").replaceAfter("0", "0")
     }
 
     fun getDateEvent() : String {

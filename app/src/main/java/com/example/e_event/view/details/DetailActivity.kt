@@ -30,8 +30,8 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil
-            .setContentView<ActivityMainBinding>(this, R.layout.activity_detail)
+//        val binding = DataBindingUtil
+//            .setContentView<ActivityMainBinding>(this, R.layout.activity_detail)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
     }

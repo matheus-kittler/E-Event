@@ -29,18 +29,17 @@
                 android:id="@+id/ivPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@{Util.Util.getImageSource(context, event.image)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvPrice"
+                android:text="@{event.getPriceEvent}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textColor="@color/colorPrice"
-                android:text="@{event.getPriceEvent}"
                 app:layout_constraintStart_toEndOf="@id/tvSyphra"
                 app:layout_constraintTop_toBottomOf="@id/tvDescription"
                 tools:text="999,00" />
@@ -60,12 +59,12 @@
 
             <TextView
                 android:id="@+id/tvTitle"
+                android:text="@{event.title}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:padding="5dp"
                 android:textColor="@color/black"
-                android:text="@{event.title}"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +74,7 @@
 
             <TextView
                 android:id="@+id/tvDescription"
+                android:text="@{event.description}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -82,7 +82,6 @@
                 android:padding="5dp"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
-                android:text="@{event.description}"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +95,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
-                android:text="@{event.getDateEvent}"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,6 +108,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/form_edit_text"
                 android:text="@string/btn_more_row"
+
                 android:textAllCaps="false"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"

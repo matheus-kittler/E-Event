@@ -6,7 +6,6 @@ import com.example.e_event.network.service.EventAPI
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import okhttp3.ResponseBody
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -41,11 +40,11 @@ class MainActivityViewModelTest {
         var hasUpdate: Boolean = false
 
         assertThat(//começa null
-            sub.obj.value,
+            sub.eventList.value,
             nullValue()
         )
 
-        sub.obj.observeForever {
+        sub.eventList.observeForever {
             hasUpdate = true
         }
 
@@ -75,9 +74,9 @@ class MainActivityViewModelTest {
         }// controle para que o metodo chame o onResponse
 
 
-        sub.loadEventby()
+        sub.getEvents()
         assertThat(//tem a lista
-            sub.obj.value,
+            sub.eventList.value,
             equalTo(list)
         )
 
@@ -92,7 +91,7 @@ class MainActivityViewModelTest {
         var hasUpdate: Boolean = false
         val errorMessage: String = "Deu erro!"
 
-        sub.obj.observeForever {
+        sub.eventList.observeForever {
             hasUpdate = true
         }
 
@@ -111,9 +110,9 @@ class MainActivityViewModelTest {
         }// controle para que o metodo chame o onResponse
 
 
-        sub.loadEventby()
+        sub.getEvents()
         assertThat(
-            sub.obj.value,
+            sub.eventList.value,
             nullValue()
         )
 
@@ -132,7 +131,7 @@ class MainActivityViewModelTest {
     fun loadListResponse() {
         var hasUpdate: Boolean = false
 
-        sub.obj.observeForever {
+        sub.eventList.observeForever {
             hasUpdate = true
         }
 
@@ -151,9 +150,9 @@ class MainActivityViewModelTest {
         }// controle para que o metodo chame o onResponse
 
 
-        sub.loadEventby()
+        sub.getEvents()
         assertThat(
-            sub.obj.value,
+            sub.eventList.value,
             nullValue()
         )
 

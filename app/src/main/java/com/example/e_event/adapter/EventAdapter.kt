@@ -3,8 +3,8 @@ package com.example.e_event.adapter
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -15,7 +15,6 @@ import com.example.e_event.R
 import com.example.e_event.databinding.RowEventBinding
 import com.example.e_event.model.Event
 import kotlinx.android.synthetic.main.row_event.view.*
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -24,36 +23,48 @@ class EventAdapter(private val context: Context) :
     RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     private val inflater = LayoutInflater.from(context)
-    private var items: ArrayList<Event> = ArrayList()
+
+    private var _items: ArrayList<Event> = ArrayList()
+    var items: ArrayList<Event> set(value) {
+        _items = ArrayList(value)
+        notifyDataSetChanged()
+    } get() = _items
+
     private val DATE_FORMAT = "dd/MM/yyyy"
 
-    var events: List<Event>
-        set(value) {
-            items = ArrayList(value)
-            notifyDataSetChanged()
-        }
-        get() = items
+//    var events: List<Event>
+//        set(value) {
+//            items = ArrayList(value)
+//            notifyDataSetChanged()
+//        }
+//        get() = items
 
     var onIdEventClick: ((Event, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        return EventViewHolder(inflater.inflate(R.layout.row_event, parent, false))
-        val binding = RowEventBinding
+        return EventViewHolder(DataBindingUtil.inflate(inflater, R.layout.row_event,parent, false))
+
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        val event = events[position]
+        val event = _items[position]
 
-        holder.itemView.apply {
-            tvDate.text = SimpleDateFormat(DATE_FORMAT, Locale.US).format(Date(event.date!!))
-            tvTitle.text = event.title
-            tvDescription.text = event.description
-            tvPrice.text = event.price.toString().replace(".", ",").replaceAfter("0", "0")
+//        holder.itemView.apply {
+//            tvDate.text = SimpleDateFormat(DATE_FORMAT, Locale.US).format(Date(event.date!!))
+//            tvTitle.text = event.title
+//            tvDescription.text = event.description
+//            tvPrice.text = event.price.toString().replace(".", ",").replaceAfter("0", "0")
+//
+//            holder.itemView.btnMore.setOnClickListener {
+//                onIdEventClick?.invoke(event, position)
+//            }
+//
+//        }
 
-            holder.itemView.btnMore.setOnClickListener {
-                onIdEventClick?.invoke(event, position)
-            }
-
+        (holder).also {
+            val eventId = items[position]
+            it.bind(eventId)
+            it.itemView.setOnClickListener { onIdEventClick?.invoke(eventId, position) }
         }
 
         Glide.with(context)
@@ -83,8 +94,12 @@ class EventAdapter(private val context: Context) :
 
     }
 
-    override fun getItemCount(): Int = events.size
+    override fun getItemCount(): Int = _items.size
 
-    class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class EventViewHolder(private val dataBinding: RowEventBinding) : RecyclerView.ViewHolder(dataBinding.root) {
+        fun bind(event: Event) {
+            dataBinding.event = event
+        }
+    }
 
 }
