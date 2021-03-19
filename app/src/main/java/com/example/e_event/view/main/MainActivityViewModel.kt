@@ -1,20 +1,14 @@
 package com.example.e_event.view.main
 
-import androidx.lifecycle.LiveData
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.e_event.util.LoadingState
 import com.example.e_event.network.Network
 import com.example.e_event.model.Event
 import com.example.e_event.network.service.EventAPI
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.await
-import java.lang.Exception
 
 class MainActivityViewModel(
     private val service: EventAPI = Network.getInstance(EventAPI::class.java)

@@ -18,34 +18,55 @@ import com.example.e_event.view.details.DetailViewModel
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel : MainActivityViewModel by viewModels()
-
-    private val detailViewModel: DetailViewModel by viewModels()
-
-    private val adapter: EventAdapter by lazy {
-        EventAdapter(this).apply {
-            onIdEventClick = { event, _ ->
-                event.id?.let { detailViewModel.checkDetails(it) }
-            }
-        }
-    }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil
-            .setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil
+            .setContentView(this, R.layout.activity_main)
 
-        binding.lifecycleOwner = this
+        setupBinding()
+        setupObserves()
+        setupRecyclerView()
+    }
 
-        binding.viewModel = mainViewModel
-
-        val events = Observer<List<Event>> {
-            adapter.items = it as ArrayList<Event>
-                binding.rvEventList.apply {
-                    layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-                    adapter = this@MainActivity.adapter
-                }
+    private fun setupBinding () {
+        val activity = this
+        binding.apply {
+            lifecycleOwner = activity
+            viewModel = activity.mainViewModel
         }
+    }
 
-        mainViewModel.obj.observe(this, events)
+    private fun setupRecyclerView () {
+        val activity = this
+
+        binding.rvEventList.apply {
+            adapter = EventAdapter(
+                activity,
+                activity.mainViewModel.obj
+            )
+        }
+    }
+
+    private fun setupObserves () {
+        val activity = this
+
+        mainViewModel.apply {
+
+            obj.observe(activity) {
+                binding.rvEventList.adapter?.notifyDataSetChanged()
+            }
+
+//            error.observe(activity) {
+//                s(
+//                    getString(R.string.dialog_default_error_title),
+//                    if(it == null) getString(R.string.unknown_error)
+//                    else getString(it)
+//                ) {
+//                    setNeutralButton("OK", null)
+//                }
+//            }
+        }
     }
 }
