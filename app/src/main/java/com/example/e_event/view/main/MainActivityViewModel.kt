@@ -21,47 +21,20 @@ class MainActivityViewModel(
         .build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 ) : ViewModel() {
 
-    private val _loading = MutableLiveData<LoadingState>()
-    val loading: LiveData<LoadingState>
-        get() = _loading
+    val obj: MutableLiveData<List<Event>> = MutableLiveData<List<Event>>()
+    val error: MutableLiveData<String> = MutableLiveData<String>()
 
-    private val _eventList: MutableLiveData<List<Event>> = MutableLiveData()
-    val eventList: MutableLiveData<List<Event>> get() = _eventList
-    var error: MutableLiveData<String> = MutableLiveData<String>()
-
-    init {
-        fetchData()
-    }
-
-    private fun fetchData() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                _loading.postValue(LoadingState.LOADING)
-                val response : Response<List<Event>> = service.getEvent()
-                if (response.isSuccessful) {
-                    _eventList.postValue(response.body())
-                    _loading.postValue(LoadingState.LOADED)
-                } else {
-                    _loading.postValue(LoadingState.error(response.toString()))
+    fun getEvents() {
+        service.getEvent().enqueue(object : Callback<List<Event>> {
+            override fun onResponse(call: Call<List<Event>>?, response: Response<List<Event>>?) {
+                if (response != null) {
+                    obj.value = response.body()
                 }
-
-            } catch (e: Exception) {
-                _loading.postValue(LoadingState.error(e.message))
             }
-        }
+
+            override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
+                error.value = t?.message
+            }
+        })
     }
-
-//    fun getEvents() {
-//        service.getEvent().enqueue(object : Callback<List<Event>> {
-//            override fun onResponse(call: Call<List<Event>>?, response: Response<List<Event>>?) {
-//                if (response != null) {
-//                    eventList.value = response.body()
-//                }
-//            }
-
-//            override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
-//                error.value = t?.message
-//            }
-//        })
-//    }
 }

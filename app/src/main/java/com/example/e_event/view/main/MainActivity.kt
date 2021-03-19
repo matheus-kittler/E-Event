@@ -17,9 +17,7 @@ import com.example.e_event.view.details.DetailViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel : MainActivityViewModel by lazy {
-        ViewModelProvider(this)[MainActivityViewModel::class.java]
-    }
+    private val mainViewModel : MainActivityViewModel by viewModels()
 
     private val detailViewModel: DetailViewModel by viewModels()
 
@@ -31,18 +29,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val binding by lazy {
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main).run {
-            lifecycleOwner = this@MainActivity
-            viewModel = mainViewModel
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = DataBindingUtil
+            .setContentView<ActivityMainBinding>(this, R.layout.activity_main)
 
-        mainViewModel.eventList.observe(this, Observer {
-            Log.e("MainActivity", it.toString())
-        })
+        binding.lifecycleOwner = this
+
+        binding.viewModel = mainViewModel
+
+        val events = Observer<List<Event>> {
+            adapter.items = it as ArrayList<Event>
+                binding.rvEventList.apply {
+                    layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
+                    adapter = this@MainActivity.adapter
+                }
+        }
+
+        mainViewModel.obj.observe(this, events)
     }
 }

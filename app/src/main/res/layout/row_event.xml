@@ -6,7 +6,6 @@
     <data>
 
         <import type="com.example.e_event.model.Event" />
-        <import type="com.example.e_event.extension.Util" />
 
         <variable
             name="event"
@@ -91,6 +90,7 @@
 
             <TextView
                 android:id="@+id/tvDate"
+                android:text="@{event.getDateEvent}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
