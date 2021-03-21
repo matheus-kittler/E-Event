@@ -6,10 +6,15 @@
     <data>
 
         <import type="com.example.e_event.model.Event" />
+        <import type="com.example.e_event.view.main.MainActivityViewModel" />
 
         <variable
             name="event"
             type="Event" />
+
+        <variable
+            name="mainViewModel"
+            type="MainActivityViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +40,7 @@
 
             <TextView
                 android:id="@+id/tvPrice"
-                android:text="@{event.getPriceEvent}"
+                android:text="@{}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -91,7 +96,7 @@
 
             <TextView
                 android:id="@+id/tvDate"
-                android:text="@{event.getDateEvent}"
+                android:text="@{}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"

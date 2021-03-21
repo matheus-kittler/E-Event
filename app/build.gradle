@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.e_event"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -47,27 +47,41 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
-
     //Retrofit
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
 
     //Mockito
-    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
     testImplementation "org.mockito:mockito-core:3.1.0"
     testImplementation "org.mockito:mockito-inline:3.1.0"
 
     //Viewmodels
-    implementation 'androidx.fragment:fragment-ktx:1.3.0'
+    implementation 'androidx.fragment:fragment-ktx:1.3.1'
 
     //DataBinding
     kapt 'com.android.databinding:compiler:3.1.4'
+
+    //Network
+    implementation "com.github.LTMezzari:kotlin-network:0.8.3"
+
+    //Koin Kotlin
+    implementation "org.koin:koin-core:2.2.2"
+    implementation "org.koin:koin-core-ext:2.2.2"
+
+    //Koin Android
+    implementation "org.koin:koin-androidx-scope:2.2.2"
+    implementation "org.koin:koin-androidx-viewmodel:2.2.2"
+    implementation "org.koin:koin-androidx-fragment:2.2.2"
+
+    //Koin Test
+    testImplementation "org.koin:koin-test:2.2.2"
 }

@@ -2,7 +2,7 @@ package com.example.e_event.view.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.e_event.model.Event
-import com.example.e_event.network.service.EventAPI
+import com.example.e_event.network.service.IEventAPI
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -25,11 +25,11 @@ class MainActivityViewModelTest {
     val threadRule = InstantTaskExecutorRule()
 
     lateinit var sub: MainActivityViewModel
-    lateinit var service: EventAPI
+    lateinit var service: IEventAPI
 
     @Before
     fun setUp() {
-        service = mock(EventAPI::class.java) //Iniciando o serviço para maior controle
+        service = mock(IEventAPI::class.java) //Iniciando o serviço para maior controle
         sub = MainActivityViewModel( // iniciando a viewModel
             service
         )
@@ -62,7 +62,7 @@ class MainActivityViewModelTest {
         val call: Call<List<Event>> = mock()
 
         whenever(
-            service.getEvent()
+            service.loadEvents()
         ).thenReturn(
             call
         )
@@ -98,7 +98,7 @@ class MainActivityViewModelTest {
         val call: Call<List<Event>> = mock()
 
         whenever(
-            service.getEvent()
+            service.loadEvents()
         ).thenReturn(
             call
         )
@@ -138,7 +138,7 @@ class MainActivityViewModelTest {
         val call: Call<List<Event>> = mock()
 
         whenever(
-            service.getEvent()
+            service.loadEvents()
         ).thenReturn(
             call
         )

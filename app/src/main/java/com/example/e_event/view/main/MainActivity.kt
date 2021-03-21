@@ -5,20 +5,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.e_event.R
 import com.example.e_event.adapter.EventAdapter
 import com.example.e_event.databinding.ActivityMainBinding
-import com.example.e_event.model.Event
-import com.example.e_event.view.details.DetailViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel : MainActivityViewModel by viewModels()
+    private val mainViewModel : MainActivityViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
+    private val adapter: EventAdapter by lazy {
+        EventAdapter(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +40,7 @@ class MainActivity : AppCompatActivity() {
         val activity = this
 
         binding.rvEventList.apply {
-            adapter = EventAdapter(
-                activity,
-                activity.mainViewModel.obj
-            )
+            adapter = this@MainActivity.adapter
         }
     }
 
@@ -54,9 +49,11 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.apply {
 
-            obj.observe(activity) {
-                binding.rvEventList.adapter?.notifyDataSetChanged()
+            events.observe(this@MainActivity) {
+                adapter.events = it ?: arrayListOf()
             }
+
+            mainViewModel.loadEvents()
 
 //            error.observe(activity) {
 //                s(

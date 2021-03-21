@@ -12,11 +12,15 @@ import com.example.e_event.model.Event
 
 class EventAdapter(
     context: Context,
-    private val events: LiveData<List<Event>>,
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
 ) :
     RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
+    var events: List<Event> = ArrayList()
+    set(value) {
+        field = ArrayList(value)
+        notifyDataSetChanged()
+    }
     var onIdEventClick: ((Event, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -25,10 +29,10 @@ class EventAdapter(
         )
     }
 
-    override fun getItemCount(): Int = events.value.orEmpty().size
+    override fun getItemCount(): Int = events.size
 
     private fun getItem(position: Int): Event? {
-        return events.value?.get(position)
+        return events[position]
     }
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
