@@ -4,6 +4,7 @@ package com.example.e_event.view.details
 import android.os.Bundle
 import androidx.lifecycle.*
 import com.example.databindingtest.util.Resource
+import com.example.databindingtest.util.Status
 import com.example.e_event.dispatcher.IAppDispatchers
 import com.example.e_event.model.Event
 import com.example.e_event.network.service.backend.IEventService
@@ -22,13 +23,17 @@ class DetailViewModel(
         return@map it.data
     }
 
-    val detail: LiveData<Event> = Transformations.map(eventResource) {
-        return@map it.data
+    val isError: LiveData<String> = Transformations.map(eventResource) {
+        if (it.message != null && it.status == Status.ERROR) {
+            return@map it?.message
+        } else {
+            return@map null
+        }
     }
 
-    val activityToStart = MutableLiveData<Pair<KClass<*>, Bundle?>>()
-
-//    val detailEvent: LiveData<Event> = MutableLiveData<Event>()
+    val isLoading: LiveData<Boolean> = Transformations.map(eventResource) {
+        return@map it.status == Status.LOADING
+    }
 
     fun getDetails(id: Int) {
         viewModelScope.launch(dispatchers.io) {

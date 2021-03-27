@@ -20,13 +20,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainActivityViewModel by viewModel()
-    private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
     private val adapter: EventAdapter by lazy {
         EventAdapter(this).apply {
             onIdEventClick = { event, _ ->
                 event.id?.let {
-                    detailViewModel.getDetails(it)
+                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                    intent.putExtra("detail", it)
+                    startActivity(intent)
                 }
             }
         }
@@ -62,11 +63,11 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.apply {
 
+            loadEvents()
+
             events.observe(this@MainActivity) {
                 adapter.events = it ?: arrayListOf()
             }
-
-            mainViewModel.loadEvents()
 
             isError.observe(this@MainActivity) {
                 if (it != null) {
@@ -81,15 +82,6 @@ class MainActivity : AppCompatActivity() {
 
             isLoading.observe(this@MainActivity) {
 
-            }
-        }
-
-        detailViewModel.apply {
-            event.observe(this@MainActivity) {
-                val detail: Event? = it
-                val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("detail", detail)
-                startActivity(intent)
             }
         }
     }

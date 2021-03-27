@@ -92,7 +92,7 @@
                     android:padding="5dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="@{detailViewModel.detail.title}"
+                    android:text="@{detailViewModel.event.title}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDate"
                     tools:text="Pepsi OnStage" />
