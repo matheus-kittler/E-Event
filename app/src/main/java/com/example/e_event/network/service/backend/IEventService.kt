@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface IEventService {
     suspend fun loadEvents(): Flow<Resource<List<Event>>>
+
+    suspend fun getEvent(id: Int): Flow<Resource<Event>>
 }

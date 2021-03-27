@@ -2,8 +2,9 @@ package com.example.e_event.view.main
 
 
 import androidx.lifecycle.*
-import com.example.databindingtest.dispatcher.IAppDispatchers
+import com.example.e_event.dispatcher.IAppDispatchers
 import com.example.databindingtest.util.Resource
+import com.example.databindingtest.util.Status
 import com.example.e_event.model.Event
 import com.example.e_event.network.service.backend.IEventService
 import kotlinx.coroutines.flow.collect
@@ -19,9 +20,19 @@ class MainActivityViewModel(
     val events: LiveData<List<Event>> = Transformations.map(eventsResource) {
         return@map it?.data
     }
-    val error: MutableLiveData<String> = MutableLiveData<String>()
+    val isError: LiveData<String> = Transformations.map(eventsResource) {
+        if (it.message != null && it.status == Status.ERROR) {
+            return@map it?.message
+        } else {
+            return@map null
+        }
+    }
 
-    var event: Event? = null
+    val isLoading: LiveData<Boolean> = Transformations.map(eventsResource) {
+        return@map it.status == Status.LOADING
+    }
+
+
 
     fun loadEvents() {
         viewModelScope.launch(dispatchers.io) {
@@ -31,8 +42,8 @@ class MainActivityViewModel(
         }
     }
 
-    fun getEvent() {
-        val eventId = event?.id ?: return
-    }
+//    fun getEvent() {
+//        val eventId = event?.id ?: return
+//    }
 
 }

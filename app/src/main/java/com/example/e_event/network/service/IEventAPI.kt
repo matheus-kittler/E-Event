@@ -11,12 +11,12 @@ import retrofit2.http.*
 interface IEventAPI {
 
     @GET("events")
-    fun loadEvents(): Deferred<ApiResponse<List<Event>>>
+    fun loadEventsAsync(): Deferred<ApiResponse<List<Event>>>
 
     @GET("events/{id}")
-    fun getDetailsEvent(
+    fun getDetailsEventAsync(
         @Path("id") zipId: Int
-    ): Call<Event>
+    ): Deferred<ApiResponse<Event>>
 
     @POST("checkin")
     fun checkInEvent(@Body checkIn: CheckIn): Call<CheckIn>

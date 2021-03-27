@@ -32,6 +32,7 @@
             <ImageView
                 android:id="@+id/ivPhoto"
                 imageFromUrl="@{event.image}"
+                tools:src="@mipmap/ic_launcher_round"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +41,7 @@
 
             <TextView
                 android:id="@+id/tvPrice"
-                android:text="@{}"
+                android:text="@{String.valueOf(event.priceEvent)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -96,7 +97,7 @@
 
             <TextView
                 android:id="@+id/tvDate"
-                android:text="@{}"
+                android:text="@{@string/format(event.date)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"

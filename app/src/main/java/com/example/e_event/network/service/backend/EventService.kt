@@ -16,7 +16,18 @@ class EventService(
         return flow {
             NetworkBoundResource(
                 collector = this,
-                call = service.loadEvents()
+                call = service.loadEventsAsync()
+            ) {
+                it
+            }.build()
+        }
+    }
+
+    override suspend fun getEvent(id: Int): Flow<Resource<Event>> {
+        return flow {
+            NetworkBoundResource(
+                collector = this,
+                call = service.getDetailsEventAsync(id)
             ) {
                 it
             }.build()

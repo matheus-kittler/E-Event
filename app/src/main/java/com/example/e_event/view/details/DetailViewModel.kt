@@ -1,32 +1,33 @@
-//package com.example.e_event.view.details
-//
-//import androidx.lifecycle.MutableLiveData
-//import androidx.lifecycle.ViewModel
-//import com.example.e_event.model.Event
-//import com.example.e_event.network.service.IEventAPI
-//import retrofit2.Call
-//import retrofit2.Callback
-//import retrofit2.Response
-//
-//class DetailViewModel : ViewModel() {
-//
-//    var eventId: MutableLiveData<Event> = MutableLiveData<Event>()
-//    var error: MutableLiveData<String> = MutableLiveData<String>()
-//    val service: IEventAPI = Network.getInstance(IEventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
-//
-//    fun checkDetails(id: Int) {
-//        service.getDetailsEvent(id).enqueue(object : Callback<Event> {
-//            override fun onResponse(call: Call<Event>?, response: Response<Event>?) {
-//                if (response != null) {
-//                    eventId.value = response.body()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<Event>?, t: Throwable?) {
-//                error.value = t?.message
-//            }
-//        })
-//    }
-//
-//
-//}
+package com.example.e_event.view.details
+
+
+import androidx.lifecycle.*
+import com.example.databindingtest.util.Resource
+import com.example.e_event.dispatcher.IAppDispatchers
+import com.example.e_event.model.Event
+import com.example.e_event.network.service.backend.IEventService
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+
+class DetailViewModel(
+    private val service: IEventService,
+    private val dispatchers: IAppDispatchers
+) : ViewModel() {
+
+    val eventId: MutableLiveData<Event> = MutableLiveData<Event>()
+    private val eventResource: MutableLiveData<Resource<Event>> = MutableLiveData<Resource<Event>>()
+
+    val event: LiveData<Event> = Transformations.map(eventResource) {
+        return@map it?.data
+    }
+//    var event: Event? = null
+
+    fun getDetails(id: Int) {
+//        val eventId = event?.id ?: return
+        viewModelScope.launch(dispatchers.io) {
+            service.getEvent(id).collect {
+                eventResource.postValue(it)
+            }
+        }
+    }
+}

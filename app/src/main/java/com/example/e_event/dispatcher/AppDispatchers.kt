@@ -1,4 +1,4 @@
-package com.example.databindingtest.dispatcher
+package com.example.e_event.dispatcher
 
 import kotlinx.coroutines.Dispatchers
 import kotlin.coroutines.CoroutineContext

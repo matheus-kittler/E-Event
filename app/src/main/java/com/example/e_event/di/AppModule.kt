@@ -1,12 +1,13 @@
 package com.example.e_event.di
 
 
-import com.example.databindingtest.dispatcher.AppDispatchers
-import com.example.databindingtest.dispatcher.IAppDispatchers
+import com.example.e_event.dispatcher.AppDispatchers
+import com.example.e_event.dispatcher.IAppDispatchers
 import com.example.databindingtest.network.module.RetrofitModule
 import com.example.e_event.network.service.backend.EventService
 import com.example.e_event.network.service.IEventAPI
 import com.example.e_event.network.service.backend.IEventService
+import com.example.e_event.view.details.DetailViewModel
 import com.example.e_event.view.main.MainActivityViewModel
 import mezzari.torres.lucas.network.source.Network
 import mezzari.torres.lucas.network.source.module.client.LogModule
@@ -36,6 +37,7 @@ val networkModule = module {
 
 val viewModelModule = module {
     viewModel { MainActivityViewModel(get(), get()) }
+    viewModel { DetailViewModel(get(), get()) }
 }
 
 val appModule = listOf(genericModule, networkModule, viewModelModule)

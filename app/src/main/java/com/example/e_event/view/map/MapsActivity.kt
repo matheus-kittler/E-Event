@@ -39,7 +39,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        var detail: Event = intent.getSerializableExtra("location") as Event
+        val detail: Event = intent.getSerializableExtra("location") as Event
         // Add a marker in Sydney and move the camera
         val location = LatLng(detail.latitude!!.toDouble(), detail.longitude!!.toDouble())
         mMap.addMarker(MarkerOptions().position(location).title(detail.title))

@@ -4,23 +4,22 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_event.R
 import com.example.e_event.databinding.RowEventBinding
 import com.example.e_event.model.Event
 
 class EventAdapter(
-    context: Context,
+    context: Context
+) : RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
+
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
-) :
-    RecyclerView.Adapter<EventAdapter.EventViewHolder>() {
 
     var events: List<Event> = ArrayList()
-    set(value) {
-        field = ArrayList(value)
-        notifyDataSetChanged()
-    }
+        set(value) {
+            field = ArrayList(value)
+            notifyDataSetChanged()
+        }
     var onIdEventClick: ((Event, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
@@ -31,13 +30,13 @@ class EventAdapter(
 
     override fun getItemCount(): Int = events.size
 
-    private fun getItem(position: Int): Event? {
-        return events[position]
-    }
-
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        getItem(position)?.let {
-            holder.bind(it)
+        (holder as EventViewHolder).also {
+            val event = events[position]
+            it.bind(event)
+            it.itemView.setOnClickListener {
+                onIdEventClick?.invoke(event, position)
+            }
         }
     }
 
@@ -45,9 +44,7 @@ class EventAdapter(
         RecyclerView.ViewHolder(dataBinding.root) {
 
         fun bind(event: Event) {
-            dataBinding.apply {
-                this.event = event
-            }
+            dataBinding.event = event
         }
     }
 

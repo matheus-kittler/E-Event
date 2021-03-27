@@ -7,4 +7,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="ticket_value_txt">Valor da Entrada R$</string>
     <string name="syphra">R$</string>
+    <string name="format">%1$td/%1$tm/%1$tY</string>
+    <string name="title_error">Ops… Ocorreu um erro!</string>
+    <string name="error">Desculpe mas ocorreu um erro, tente novamente mais tarde!</string>
 </resources>

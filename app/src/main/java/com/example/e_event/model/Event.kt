@@ -2,11 +2,7 @@ package com.example.e_event.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.provider.Settings.System.DATE_FORMAT
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Suppress("UNREACHABLE_CODE")
 class Event(
@@ -21,13 +17,8 @@ class Event(
     @SerializedName("id") var id: Int?
 ) : Parcelable {
 
-    fun getPriceEvent() : String {
+    fun getPriceEvent(): String {
         return price.toString().replace(".", ",").replaceAfter("0", "0")
-    }
-
-    fun getDateEvent() : String {
-        val value = date
-        return String.format(DATE_FORMAT, Locale.US, value)
     }
 
     constructor(parcel: Parcel) : this(
@@ -56,7 +47,6 @@ class Event(
     override fun describeContents(): Int {
         return 0
     }
-
 
     companion object {
         @JvmField val CREATOR : Parcelable.Creator<Event> = object : Parcelable.Creator<Event> {
