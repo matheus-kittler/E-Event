@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.e_event.R
 import com.example.e_event.databinding.RowEventBinding
 import com.example.e_event.model.Event
+import kotlinx.android.synthetic.main.row_event.view.*
 
 class EventAdapter(
     context: Context
@@ -34,8 +35,10 @@ class EventAdapter(
         (holder as EventViewHolder).also {
             val event = events[position]
             it.bind(event)
-            it.itemView.setOnClickListener {
-                onIdEventClick?.invoke(event, position)
+            it.itemView.apply {
+                this.btnMore.setOnClickListener {
+                    onIdEventClick?.invoke(event, position)
+                }
             }
         }
     }

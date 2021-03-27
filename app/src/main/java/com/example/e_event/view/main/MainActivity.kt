@@ -3,6 +3,7 @@ package com.example.e_event.view.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,18 +19,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainViewModel : MainActivityViewModel by viewModel()
-    private val detailViewModel : DetailViewModel by viewModel()
+    private val mainViewModel: MainActivityViewModel by viewModel()
+    private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
     private val adapter: EventAdapter by lazy {
         EventAdapter(this).apply {
             onIdEventClick = { event, _ ->
-                detailViewModel.getDetails(event.id!!)
+                event.id?.let {
+                    detailViewModel.getDetails(it)
+                }
             }
         }
     }
-
-    var event: Event? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
     }
 
-    private fun setupBinding () {
+    private fun setupBinding() {
         val activity = this
         binding.apply {
             lifecycleOwner = activity
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRecyclerView () {
+    private fun setupRecyclerView() {
 
         binding.rvEventList.apply {
             adapter = this@MainActivity.adapter
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupObserves () {
+    private fun setupObserves() {
 
         mainViewModel.apply {
 
@@ -78,12 +79,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            isLoading.observe(this@MainActivity) {}
+            isLoading.observe(this@MainActivity) {
+
+            }
         }
 
         detailViewModel.apply {
-            eventId.observe(this@MainActivity) {
+            event.observe(this@MainActivity) {
+                val detail: Event? = it
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra("detail", detail)
                 startActivity(intent)
             }
         }

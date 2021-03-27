@@ -40,10 +40,10 @@
 <!--            android:name=".view.check_in.CheckInActivity"-->
 <!--            android:parentActivityName=".view.details.DetailActivity"-->
 <!--            android:screenOrientation="portrait"/>-->
-<!--        <activity-->
-<!--            android:name=".view.details.DetailActivity"-->
-<!--            android:parentActivityName=".view.main.MainActivity"-->
-<!--            android:screenOrientation="portrait" />-->
+        <activity
+            android:name=".view.details.DetailActivity"
+            android:parentActivityName=".view.main.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.main.MainActivity"
             android:screenOrientation="portrait">
