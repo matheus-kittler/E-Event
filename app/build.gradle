@@ -11,10 +11,11 @@ android {
 
     defaultConfig {
         applicationId "com.example.e_event"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -34,7 +35,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 }
 
@@ -51,14 +52,17 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
 
+    implementation 'com.android.support:multidex:1.0.3'
+
     //Maps
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
     //Retrofit
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
+    //Interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
 
     //Mockito
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
@@ -70,7 +74,7 @@ dependencies {
     kapt 'com.android.databinding:compiler:3.1.4'
 
     //Network
-    implementation "com.github.LTMezzari:kotlin-network:0.8.3"
+    implementation project(":network")
 
     //Koin Kotlin
     implementation "org.koin:koin-core:2.2.2"

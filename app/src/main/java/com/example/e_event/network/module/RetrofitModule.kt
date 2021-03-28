@@ -1,4 +1,4 @@
-package com.example.databindingtest.network.module
+package com.example.e_event.network.module
 
 import com.example.databindingtest.network.adapter.RetrofitCallAdapterFactory
 import mezzari.torres.lucas.network.source.Network

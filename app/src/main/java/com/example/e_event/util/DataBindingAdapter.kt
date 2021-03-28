@@ -46,12 +46,12 @@ object BindingAdapters {
         }
     }
 
-    @JvmStatic
-    @BindingAdapter("locationEvent")
-    fun bindLocation(lat: Double, lng: Double, context: Context): String {
-        val mGeocoder = Geocoder(context)
-        val address = mGeocoder.getFromLocation(lat, lng, 1)
-        return address[0].getAddressLine(0)
-    }
+//    @JvmStatic
+//    @BindingAdapter("locationEvent")
+//    fun bindLocation(lat: Double, lng: Double, context: Context): String {
+//        val mGeocoder = Geocoder(context)
+//        val address = mGeocoder.getFromLocation(lat, lng, 1)
+//        return address[0].getAddressLine(0)
+//    }
 
 }

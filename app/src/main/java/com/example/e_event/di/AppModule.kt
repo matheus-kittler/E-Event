@@ -3,7 +3,7 @@ package com.example.e_event.di
 
 import com.example.e_event.dispatcher.AppDispatchers
 import com.example.e_event.dispatcher.IAppDispatchers
-import com.example.databindingtest.network.module.RetrofitModule
+import com.example.e_event.network.module.RetrofitModule
 import com.example.e_event.network.service.backend.EventService
 import com.example.e_event.network.service.IEventAPI
 import com.example.e_event.network.service.backend.IEventService
