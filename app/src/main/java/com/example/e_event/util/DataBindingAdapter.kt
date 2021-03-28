@@ -1,6 +1,8 @@
 package com.example.e_event.util
 
+import android.content.Context
 import android.graphics.drawable.Drawable
+import android.location.Geocoder
 import android.provider.Settings
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -10,6 +12,7 @@ import com.bumptech.glide.request.RequestListener
 import com.example.e_event.R
 import java.util.*
 import javax.sql.DataSource
+import kotlin.coroutines.coroutineContext
 
 object BindingAdapters {
     @JvmStatic
@@ -42,4 +45,13 @@ object BindingAdapters {
                 .into(view)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("locationEvent")
+    fun bindLocation(lat: Double, lng: Double, context: Context): String {
+        val mGeocoder = Geocoder(context)
+        val address = mGeocoder.getFromLocation(lat, lng, 1)
+        return address[0].getAddressLine(0)
+    }
+
 }

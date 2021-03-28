@@ -48,7 +48,9 @@ class DetailActivity : AppCompatActivity() {
                         getString(R.string.title_error),
                         getString(R.string.error)
                     ) {
-                        setNeutralButton("OK", null)
+                        setPositiveButton("OK") { _, _ ->
+                            finish()
+                        }
                     }
                 }
             }
