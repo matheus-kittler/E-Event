@@ -98,7 +98,6 @@
 
                 <ImageButton
                     android:id="@+id/ibShare"
-                    android:onClick="@{(view) -> detailViewModel.messageEvent()}"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="10dp"

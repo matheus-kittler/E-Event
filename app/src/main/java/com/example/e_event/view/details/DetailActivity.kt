@@ -8,6 +8,7 @@ import com.example.e_event.R
 import com.example.e_event.databinding.ActivityDetailBinding
 import com.example.e_event.model.Event
 import com.example.e_event.util.showAlert
+import kotlinx.android.synthetic.main.activity_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
@@ -56,6 +57,23 @@ class DetailActivity : AppCompatActivity() {
                                 text = getLocation(lat, lng, this@DetailActivity)
                             }
                         }
+                    }
+
+
+                    binding.ibShare.setOnClickListener {
+                        var message: String = ""
+                        //TODO arrumar isso se der tempo
+                        message += "\nEvento: " + binding.tvTitle.text
+                        message += "\nData: " + binding.tvDate.text
+                        message += "\nIngresso: " + binding.tvPrice.text
+                        message += "\nLocal: " + binding.tvAddressEvent.text
+
+                        val intent = Intent()
+                        intent.action = Intent.ACTION_SEND
+                        intent.putExtra(Intent.EXTRA_TEXT, message)
+                        intent.type = "text/plain"
+
+                        startActivity(intent)
                     }
                 }
             }
