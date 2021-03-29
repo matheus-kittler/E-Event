@@ -1,0 +1,109 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+ext {
+    sdkVersion = 29
+    toolsVersion = "29.0.3"
+
+
+    //Common Versions
+    kotlinVersion = "1.4.10"
+    retrofitVersion = "2.9.0"
+    okhttpVersion = "4.8.0"
+
+    libraries = [
+            //Gradle
+            gradle_tools: 'com.android.tools.build:gradle:4.0.1',
+            gradle_plugin: 'com.github.dcendents:android-maven-gradle-plugin:2.1',
+
+            //Kotlin
+            kotlin_plugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion",
+            kotlin_jdk: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion",
+            kotlin_reflect: "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion",
+
+            //Android
+            app_compat: 'androidx.appcompat:appcompat:1.1.0',
+            androidx_core: 'androidx.core:core-ktx:1.3.1',
+            constraint_layout: 'androidx.constraintlayout:constraintlayout:1.1.3',
+
+            //Tests
+            junit: 'junit:junit:4.13',
+            test_runner: 'androidx.test:runner:1.2.0',
+            expresso_core: 'androidx.test.espresso:espresso-core:3.2.0',
+            arch_core: 'android.arch.core:core-testing:1.1.1',
+
+            //Retrofit
+            retrofit: "com.squareup.retrofit2:retrofit:2.9.0",
+            retrofit_gson: "com.squareup.retrofit2:converter-gson:2.9.0",
+
+            //Logging Interceptor
+            logging_interceptor: "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
+            mock_server: "com.squareup.okhttp3:mockwebserver:$okhttpVersion",
+    ]
+}
+
+android {
+    compileSdkVersion sdkVersion
+    buildToolsVersion toolsVersion
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion sdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10"
+    implementation libraries.kotlin_reflect
+
+    //Android
+    implementation libraries.app_compat
+
+    //Tests
+    testImplementation libraries.junit
+    androidTestImplementation libraries.test_runner
+    androidTestImplementation libraries.expresso_core
+    testImplementation libraries.arch_core
+
+    //Retrofit
+    implementation libraries.retrofit
+    implementation libraries.retrofit_gson
+
+    //Logging Interceptor
+    implementation libraries.logging_interceptor
+
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+}
+
+repositories {
+    mavenCentral()
+}
