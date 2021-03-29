@@ -24,9 +24,9 @@ class MainActivity : AppCompatActivity() {
     private val adapter: EventAdapter by lazy {
         EventAdapter(this).apply {
             onIdEventClick = { event, _ ->
-                event.id?.let {
+                event.id?.let { eventId ->
                     val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                    intent.putExtra("detail", it)
+                    intent.putExtra("eventId", eventId)
                     startActivity(intent)
                 }
             }

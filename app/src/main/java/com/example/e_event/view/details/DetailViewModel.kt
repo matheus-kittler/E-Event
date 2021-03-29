@@ -1,6 +1,8 @@
 package com.example.e_event.view.details
 
 
+import android.content.Context
+import android.location.Geocoder
 import android.os.Bundle
 import androidx.lifecycle.*
 import com.example.databindingtest.util.Resource
@@ -41,5 +43,11 @@ class DetailViewModel(
                 eventResource.postValue(it)
             }
         }
+    }
+
+    fun getLocation(lat: Double, lng: Double, context: Context): String? {
+        val mGeocoder = Geocoder(context)
+        val address = mGeocoder.getFromLocation(lat, lng, 1)
+        return address[0].getAddressLine(0)
     }
 }

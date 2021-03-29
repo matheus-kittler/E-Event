@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.example.e_event.view.details.DetailViewModel" />
+
         <import type="android.content.Context" />
 
         <variable
@@ -12,8 +13,7 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -42,14 +42,14 @@
 
                 <ImageView
                     android:id="@+id/ivPhoto"
+                    imageFromUrl="@{detailViewModel.event.image}"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    imageFromUrl="@{detailViewModel.event.image}"
-                    tools:src="@mipmap/ic_launcher_round"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@mipmap/ic_launcher_round" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -90,9 +90,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
+                    android:text="@{detailViewModel.event.title}"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="@{detailViewModel.event.title}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvDate"
                     tools:text="Pepsi OnStage" />
@@ -125,8 +125,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="16sp"
                     android:text="@{detailViewModel.event.description}"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvTitle"
                     tools:text="Show da Banda QOTSA" />
@@ -137,8 +137,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:padding="5dp"
-                    android:textColor="@color/colorPrice"
                     android:text="@{String.valueOf(detailViewModel.event.priceEvent)}"
+                    android:textColor="@color/colorPrice"
                     android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@id/tvPrice_txt"
                     app:layout_constraintTop_toBottomOf="@+id/tvAddressEvent"
@@ -150,8 +150,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:padding="5dp"
-                    android:textColor="@color/black"
                     android:text="@{@string/format(detailViewModel.event.date)}"
+                    android:textColor="@color/black"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvPrice"

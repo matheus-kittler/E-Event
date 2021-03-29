@@ -34,12 +34,13 @@
 
         <activity
             android:name=".view.map.MapsActivity"
+            android:parentActivityName=".view.details.DetailActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"/>
-<!--        <activity-->
-<!--            android:name=".view.check_in.CheckInActivity"-->
-<!--            android:parentActivityName=".view.details.DetailActivity"-->
-<!--            android:screenOrientation="portrait"/>-->
+            android:screenOrientation="portrait" />
+        <!--        <activity-->
+        <!--            android:name=".view.check_in.CheckInActivity"-->
+        <!--            android:parentActivityName=".view.details.DetailActivity"-->
+        <!--            android:screenOrientation="portrait"/>-->
         <activity
             android:name=".view.details.DetailActivity"
             android:parentActivityName=".view.main.MainActivity"
