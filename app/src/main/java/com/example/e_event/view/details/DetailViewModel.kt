@@ -2,6 +2,7 @@ package com.example.e_event.view.details
 
 
 import android.content.Context
+import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import androidx.lifecycle.*
@@ -49,5 +50,18 @@ class DetailViewModel(
         val mGeocoder = Geocoder(context)
         val address = mGeocoder.getFromLocation(lat, lng, 1)
         return address[0].getAddressLine(0)
+    }
+
+    fun messageEvent() {
+        var message: String = ""
+        message += "\nEvento: " + event.value?.title.toString()
+        message += "\nData: " + event.value?.title.toString()
+        message += "\nIngresso: " + event.value?.title.toString()
+        message += "\nLocal: " + event.value?.title.toString()
+
+        val intent = Intent()
+        intent.action = Intent.ACTION_SEND
+        intent.putExtra(Intent.EXTRA_TEXT, message)
+        intent.type = "text/plain"
     }
 }
