@@ -5,6 +5,7 @@ import com.example.databindingtest.util.Resource
 import com.example.databindingtest.util.Status
 import com.example.e_event.dispatcher.IAppDispatchers
 import com.example.e_event.model.CheckIn
+import com.example.e_event.model.User
 import com.example.e_event.network.service.backend.IEventService
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -14,9 +15,9 @@ class CheckInViewModel(
     private val dispatchers: IAppDispatchers
 ) : ViewModel() {
 
-    private val checkInResource: MutableLiveData<Resource<String>> = MutableLiveData<Resource<String>>()
+    private val checkInResource: MutableLiveData<Resource<CheckIn>> = MutableLiveData<Resource<CheckIn>>()
 
-    val checkIn: LiveData<String> = Transformations.map(checkInResource) {
+    val checkIn: LiveData<CheckIn> = Transformations.map(checkInResource) {
         return@map it?.data
     }
     val isError: LiveData<String> = Transformations.map(checkInResource) {
@@ -31,9 +32,9 @@ class CheckInViewModel(
         return@map it.status == Status.LOADING
     }
 
-    fun setCheckIn(eventId: Int, name: String, email: String) {
+    fun setCheckIn(checkIn: User) {
         viewModelScope.launch(dispatchers.io) {
-            service.setCheckIn(eventId, name, email).collect {
+            service.setCheckIn(checkIn).collect {
                 checkInResource.postValue(it)
             }
         }

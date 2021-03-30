@@ -1,11 +1,11 @@
 package com.example.e_event.view.check_in
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.example.e_event.R
 import com.example.e_event.databinding.ActivityCheckInBinding
+import com.example.e_event.model.User
 import com.example.e_event.util.showAlert
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -13,6 +13,7 @@ class CheckInActivity : AppCompatActivity() {
 
     private val checkInViewModel: CheckInViewModel by viewModel()
     private lateinit var binding: ActivityCheckInBinding
+    private var eventId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,7 @@ class CheckInActivity : AppCompatActivity() {
             .setContentView(this, R.layout.activity_check_in)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupObserves()
+        setUp()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -29,7 +31,7 @@ class CheckInActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val eventId: Int? = intent.getSerializableExtra("eventId") as Int?
+        eventId = intent.getSerializableExtra("eventId") as Int?
         intent.putExtra("eventId", eventId)
         finish()
     }
@@ -41,7 +43,14 @@ class CheckInActivity : AppCompatActivity() {
 //            checkInViewModel.setCheckIn(1, "Matheus", "matheus@gmail.com")
 
             checkIn.observe(this@CheckInActivity) {
-                checkInViewModel.setCheckIn(1, "Matheus", "matheus@gmail.com")
+                if (it != null) {
+                    showAlert(
+                        "Sucesso!",
+                        "Seu check-in foi feito com sucesso, muito obrigado!"
+                    ) {
+                        setNeutralButton("OK", null)
+                    }
+                }
             }
 
             isError.observe(this@CheckInActivity) {
@@ -51,6 +60,7 @@ class CheckInActivity : AppCompatActivity() {
                         getString(R.string.error)
                     ) {
                         setNeutralButton("OK", null)
+                        finish()
                     }
                 }
             }
@@ -58,6 +68,18 @@ class CheckInActivity : AppCompatActivity() {
             isLoading.observe(this@CheckInActivity) {
 
             }
+        }
+    }
+
+    private fun setUp() {
+        eventId = intent.getSerializableExtra("eventId") as Int?
+        val userCheck: User = User()
+
+        binding.btnConfirm.setOnClickListener {
+            userCheck.id = eventId
+            userCheck.name = binding.etName.text.toString()
+            userCheck.email = binding.etName.text.toString()
+            checkInViewModel.setCheckIn(userCheck)
         }
     }
 }
