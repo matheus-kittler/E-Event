@@ -35,11 +35,11 @@ class EventService(
         }
     }
 
-    override suspend fun setCheckIn(name: String, email: String): Flow<Resource<CheckIn>> {
+    override suspend fun setCheckIn(eventId: Int, name: String, email: String): Flow<Resource<String>> {
         return flow {
            NetworkBoundResource(
                collector = this,
-               call = service.setCheckIn(name, email)
+               call = service.setCheckIn(eventId, name, email)
            )  {
                it
            }.build()

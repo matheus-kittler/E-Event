@@ -19,5 +19,7 @@ interface IEventAPI {
     ): Deferred<ApiResponse<Event>>
 
     @POST("checkin")
-    fun setCheckIn(@Body checkIn: CheckIn): Deferred<ApiResponse<CheckIn>>
+    fun setCheckIn(
+        @Body eventId: Int, name: String, email: String
+    ): Deferred<ApiResponse<String>>
 }

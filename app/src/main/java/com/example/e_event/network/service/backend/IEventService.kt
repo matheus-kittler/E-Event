@@ -10,5 +10,5 @@ interface IEventService {
 
     suspend fun getEvent(id: Int): Flow<Resource<Event>>
 
-    suspend fun setCheckIn(checkIn: CheckIn): Flow<Resource<Event>>
+    suspend fun setCheckIn(eventId: Int, name: String, email: String): Flow<Resource<String>>
 }

@@ -3,12 +3,11 @@ package com.example.e_event.model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class CheckIn() : Serializable {
-
+class CheckIn(
     @SerializedName("eventId")
-    var id: Int? = null
+    var id: Int? = null,
     @SerializedName("name")
-    var name: String? = null
+    var name: String? = null,
     @SerializedName("email")
     var email: String? = null
-}
+)

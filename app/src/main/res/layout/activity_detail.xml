@@ -32,6 +32,7 @@
 
                 <ProgressBar
                     android:id="@+id/pbLoading"
+                    android:visibility="@{detailViewModel.isLoading ? View.VISIBLE : View.GONE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
