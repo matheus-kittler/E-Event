@@ -1,21 +1,25 @@
 package com.example.e_event.view.details
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.example.e_event.R
 import com.example.e_event.databinding.ActivityDetailBinding
 import com.example.e_event.model.Event
 import com.example.e_event.util.showAlert
+import com.example.e_event.view.check_in.CheckInActivity
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
 
-
     private val detailViewModel: DetailViewModel by viewModel()
     private lateinit var binding: ActivityDetailBinding
+    private var eventId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +32,12 @@ class DetailActivity : AppCompatActivity() {
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        eventId = intent.getSerializableExtra("eventId") as Int?
+        eventId?.let { detailViewModel.getDetails(it) }
+    }
+
     private fun setupBinding() {
         val activity = this
         binding.apply {
@@ -38,7 +48,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupObserves() {
 
-        val eventId: Int? = intent.getSerializableExtra("eventId") as Int?
+        eventId = intent.getSerializableExtra("eventId") as Int?
 
         detailViewModel.apply {
 
@@ -58,6 +68,14 @@ class DetailActivity : AppCompatActivity() {
                             }
                         }
                     }
+
+                    binding.ibCheckIn.setOnClickListener {
+                        val intent = Intent(this@DetailActivity, CheckInActivity::class.java)
+                        intent.putExtra("id", save.id)
+                        startActivity(intent)
+                    }
+
+
 
 
                     binding.ibShare.setOnClickListener {

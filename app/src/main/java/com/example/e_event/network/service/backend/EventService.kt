@@ -3,6 +3,7 @@ package com.example.e_event.network.service.backend
 
 import com.example.databindingtest.util.NetworkBoundResource
 import com.example.databindingtest.util.Resource
+import com.example.e_event.model.CheckIn
 import com.example.e_event.model.Event
 import com.example.e_event.network.service.IEventAPI
 import kotlinx.coroutines.flow.Flow
@@ -31,6 +32,17 @@ class EventService(
             ) {
                 it
             }.build()
+        }
+    }
+
+    override suspend fun setCheckIn(name: String, email: String): Flow<Resource<CheckIn>> {
+        return flow {
+           NetworkBoundResource(
+               collector = this,
+               call = service.setCheckIn(name, email)
+           )  {
+               it
+           }.build()
         }
     }
 }

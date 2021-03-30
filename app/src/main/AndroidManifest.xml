@@ -32,15 +32,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+
         <activity
-            android:name=".view.map.MapsActivity"
+            android:name=".view.check_in.CheckInActivity"
             android:parentActivityName=".view.details.DetailActivity"
-            android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
-        <!--        <activity-->
-        <!--            android:name=".view.check_in.CheckInActivity"-->
-        <!--            android:parentActivityName=".view.details.DetailActivity"-->
-        <!--            android:screenOrientation="portrait"/>-->
         <activity
             android:name=".view.details.DetailActivity"
             android:parentActivityName=".view.main.MainActivity"
