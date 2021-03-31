@@ -1,11 +1,8 @@
 package com.example.e_event.view.details
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import com.example.e_event.R
 import com.example.e_event.databinding.ActivityDetailBinding
@@ -74,9 +71,6 @@ class DetailActivity : AppCompatActivity() {
                         intent.putExtra("id", save.id)
                         startActivity(intent)
                     }
-
-
-
 
                     binding.ibShare.setOnClickListener {
                         var message: String = ""

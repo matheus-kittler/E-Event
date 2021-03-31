@@ -2,21 +2,27 @@ package com.example.e_event.view.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.databindingtest.util.ApiResponse
+import com.example.e_event.di.appModule
 import com.example.e_event.model.Event
 import com.example.e_event.network.service.IEventAPI
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.Deferred
+import mezzari.torres.lucas.network.source.Network
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.internal.duplex.MockDuplexResponseBody
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
-
 import org.junit.Test
+import org.koin.test.KoinTest
 import retrofit2.Response
 
-class MainActivityViewModelTest {
+class MainActivityViewModelTest: KoinTest  {
 
     @Rule
     @JvmField
@@ -24,14 +30,50 @@ class MainActivityViewModelTest {
 
     lateinit var sub: MainActivityViewModel
     lateinit var service: IEventAPI
+    lateinit var server: MockWebServer
 
     @Before
-    fun setUp() {
+    fun initTest() {
+        server = MockWebServer()
+    }
+
+    @After
+    fun shutdown() {
+        server.shutdown()
+    }
+
+    fun AuthenticationMananger(endpoint: String) {
+
+    }
+
+//    fun setUp() {
 //        service = mock(IEventAPI::class.java) //Iniciando o serviço para maior controle
 //        sub = MainActivityViewModel( // iniciando a viewModel
 //            service
-//        ) TODO ARRUMAR COM INJEÇÃO DE DEPENDENCIA
-    }
+//        )
+//    }
+
+//    @Test
+//    fun `authentication sends proper body`() {
+//        server.apply {
+//            enqueue(MockResponse().setBody(MockDuplexResponseBody()))
+//        }
+//
+//        val baseUrl = server.url("http://5f5a8f24d44d640016169133.mockapi.io/api/")
+//
+//        startKoin(listOf(module {
+//            sigle {
+//                get<Network>().build<IEventAPI>(baseUrl.url().toString())
+//            }
+//        }))
+//
+//        startKoin {
+//            androidLogger(Level.ERROR)
+//            modules(appModule)
+//        }
+//
+//        val testBody = LoginBody
+//    }
 
     @Test
     fun `given a list of events when service returns successful then the list should be equal`() { //quanto mais explicativo melhor
