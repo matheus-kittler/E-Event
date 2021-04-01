@@ -10,6 +10,8 @@ import com.example.e_event.util.showAlert
 import kotlinx.android.synthetic.main.activity_check_in.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val KEY_ID = "eventId"
+
 class CheckInActivity : AppCompatActivity() {
 
     private val checkInViewModel: CheckInViewModel by viewModel()
@@ -22,7 +24,7 @@ class CheckInActivity : AppCompatActivity() {
             .setContentView(this, R.layout.activity_check_in)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupObserves()
-        setUp()
+        setCheckIn()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -32,8 +34,8 @@ class CheckInActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        eventId = intent.getSerializableExtra("eventId") as Int?
-        intent.putExtra("eventId", eventId)
+        eventId = intent.getSerializableExtra(KEY_ID) as Int?
+        intent.putExtra(KEY_ID, eventId)
         finish()
     }
 
@@ -43,10 +45,10 @@ class CheckInActivity : AppCompatActivity() {
             checkIn.observe(this@CheckInActivity) {
                 if (it != null) {
                     showAlert(
-                        "Sucesso!",
-                        "Seu check-in foi feito com sucesso, muito obrigado!"
+                        getString(R.string.title_success),
+                        getString(R.string.message)
                     ) {
-                        setPositiveButton("OK") { _, _ ->
+                        setPositiveButton(getString(R.string.button_ok)) { _, _ ->
                             finish()
                         }
                     }
@@ -58,7 +60,7 @@ class CheckInActivity : AppCompatActivity() {
                             getString(R.string.title_error),
                             getString(R.string.error)
                         ) {
-                            setNeutralButton("OK", null)
+                            setNeutralButton(getString(R.string.button_ok), null)
                             finish()
                         }
                     }
@@ -71,8 +73,8 @@ class CheckInActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUp() {
-        eventId = intent.getSerializableExtra("eventId") as Int?
+    private fun setCheckIn() {
+        eventId = intent.getSerializableExtra(KEY_ID) as Int?
         val userCheck = User()
 
         binding.btnConfirm.setOnClickListener {

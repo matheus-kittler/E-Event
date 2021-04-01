@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--global dimen-->
+    <dimen name="size_5">5dp</dimen>
+    <dimen name="size_20">20dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
+    <dimen name="margin_50">50dp</dimen>
+    <dimen name="size_text_20">20sp</dimen>
+
+    <!-- activity_detail-->
+    <dimen name="height_300">300dp</dimen>
+    <dimen name="padding_8">8dp</dimen>
+    <dimen name="padding_2">2dp</dimen>
+    <dimen name="size_text_14">14sp</dimen>
+    <dimen name="size_text_16">16sp</dimen>
+
+
+    <!--activity_check_in-->
+    <dimen name="text_top_150">150dp</dimen>
+    <dimen name="size_text_22">22sp</dimen>
+    <dimen name="width_250">250dp</dimen>
+    <dimen name="height_50">50dp</dimen>
+</resources>

@@ -17,6 +17,8 @@ import com.example.e_event.view.details.DetailViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val KEY_ID = "eventId"
+
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainActivityViewModel by viewModel()
@@ -26,7 +28,7 @@ class MainActivity : AppCompatActivity() {
             onIdEventClick = { event, _ ->
                 event.id?.let { eventId ->
                     val intent = Intent(this@MainActivity, DetailActivity::class.java)
-                    intent.putExtra("eventId", eventId)
+                    intent.putExtra(KEY_ID, eventId)
                     startActivity(intent)
                 }
             }
@@ -75,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                         getString(R.string.title_error),
                         getString(R.string.error)
                     ) {
-                        setNeutralButton("OK", null)
+                        setNeutralButton(getString(R.string.button_ok), null)
                     }
                 }
             }

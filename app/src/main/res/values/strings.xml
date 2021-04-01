@@ -10,4 +10,8 @@
     <string name="format">%1$td/%1$tm/%1$tY</string>
     <string name="title_error">Ops… Ocorreu um erro!</string>
     <string name="error">Desculpe mas ocorreu um erro, tente novamente mais tarde!</string>
+    <string name="title_success">Sucesso!</string>
+    <string name="message">Seu check-in foi feito com sucesso, muito obrigado!</string>
+    <string name="button_ok">Ok</string>
+    <string name="title_text_check_in">Para efetuar o check-in\n digite seus dados:</string>
 </resources>

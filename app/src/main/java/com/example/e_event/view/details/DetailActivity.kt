@@ -12,6 +12,8 @@ import com.example.e_event.view.check_in.CheckInActivity
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val KEY_ID = "eventId"
+
 class DetailActivity : AppCompatActivity() {
 
     private val detailViewModel: DetailViewModel by viewModel()
@@ -26,12 +28,11 @@ class DetailActivity : AppCompatActivity() {
 
         setupBinding()
         setupObserves()
-
     }
 
     override fun onRestart() {
         super.onRestart()
-        eventId = intent.getSerializableExtra("eventId") as Int?
+        eventId = intent.getSerializableExtra(KEY_ID) as Int?
         eventId?.let { detailViewModel.getDetails(it) }
     }
 
@@ -45,7 +46,7 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupObserves() {
 
-        eventId = intent.getSerializableExtra("eventId") as Int?
+        eventId = intent.getSerializableExtra(KEY_ID) as Int?
 
         detailViewModel.apply {
 
@@ -66,9 +67,11 @@ class DetailActivity : AppCompatActivity() {
                         }
                     }
 
+
+
                     binding.ibCheckIn.setOnClickListener {
                         val intent = Intent(this@DetailActivity, CheckInActivity::class.java)
-                        intent.putExtra("id", save.id)
+                        intent.putExtra(KEY_ID, save.id)
                         startActivity(intent)
                     }
 
@@ -96,7 +99,7 @@ class DetailActivity : AppCompatActivity() {
                         getString(R.string.title_error),
                         getString(R.string.error)
                     ) {
-                        setPositiveButton("OK") { _, _ ->
+                        setPositiveButton(getString(R.string.button_ok)) { _, _ ->
                             finish()
                         }
                     }
