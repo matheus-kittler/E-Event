@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil
 import com.example.e_event.R
 import com.example.e_event.databinding.ActivityCheckInBinding
 import com.example.e_event.model.User
+import com.example.e_event.util.isValidEmail
+import com.example.e_event.util.isValidName
 import com.example.e_event.util.showAlert
 import kotlinx.android.synthetic.main.activity_check_in.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,22 +55,23 @@ class CheckInActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }
 
-                isError.observe(this@CheckInActivity) { error ->
-                    if (error != null) {
-                        showAlert(
-                            getString(R.string.title_error),
-                            getString(R.string.error)
-                        ) {
-                            setNeutralButton(getString(R.string.button_ok), null)
+            isError.observe(this@CheckInActivity) { error ->
+                if (error != null) {
+                    showAlert(
+                        getString(R.string.title_error),
+                        getString(R.string.error)
+                    ) {
+                        setPositiveButton(getString(R.string.button_ok)) { _, _ ->
                             finish()
                         }
                     }
                 }
+            }
 
-                isLoading.observe(this@CheckInActivity) {
+            isLoading.observe(this@CheckInActivity) {
 
-                }
             }
         }
     }
@@ -76,6 +79,10 @@ class CheckInActivity : AppCompatActivity() {
     private fun setCheckIn() {
         eventId = intent.getSerializableExtra(KEY_ID) as Int?
         val userCheck = User()
+
+        isValidEmail(binding.etEmail.toString())
+        isValidName(binding.etName.toString())
+        eventId
 
         binding.btnConfirm.setOnClickListener {
             userCheck.id = eventId
