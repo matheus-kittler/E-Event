@@ -27,10 +27,12 @@ e
 
 # Arquitetura e Frameworks
 
-Projeto com arquitetura MVVM onde estão sendo utilizando as bibliotecas Retrofit, Glide e Fragmets Extensions.
+Projeto com arquitetura MVVM onde estão sendo utilizando as bibliotecas Retrofit, Koin para injeção de dependência, Glide e Fragmets Extensions.
 
 O retrofit é utilizado primeiramente por ser mais simples a implementação do que o AsyncTask, além de por ser fácil de recuperar e fazer upload.
 Também é a forma que aprendi mais efetiva durante meu estágio de consumir e dados JSON.
+
+Utilizei o Koin para testar minha habilidades e também trabalhar com injeção de dependência, algo que não faço ultimamente, além de melhorar meu código.
 
 Já no caso do Glide, utilizei ele por ser a opção que baixa mais rápido as imagens na rede comparado ao Picasso, por exemplo.
 Glide foi o que mais tive contato quando estava tratando com imagens em projetos no meu estágio.
