@@ -94,7 +94,6 @@ class DetailActivity : AppCompatActivity() {
                     intent.action = Intent.ACTION_SEND
                     intent.putExtra(Intent.EXTRA_TEXT, message)
                     intent.type = "text/plain"
-
                     startActivity(intent)
                 }
             }
