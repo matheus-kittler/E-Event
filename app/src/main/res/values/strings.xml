@@ -6,12 +6,14 @@
     <string name="btn_confirm">Confirmar</string>
     <string name="title_activity_maps">Map</string>
     <string name="ticket_value_txt">Valor da Entrada R$</string>
+    <string name="date_txt">Data: </string>
     <string name="syphra">R$</string>
     <string name="format">%1$td/%1$tm/%1$tY</string>
     <string name="title_error">Ops… Ocorreu um erro!</string>
     <string name="error">Desculpe mas ocorreu um erro, tente novamente mais tarde!</string>
     <string name="title_success">Sucesso!</string>
     <string name="message">Seu check-in foi feito com sucesso, muito obrigado!</string>
+    <string name="internet_message">Unable to resolve host "5f5a8f24d44d640016169133.mockapi.io": No address associated with hostname</string>
     <string name="button_ok">Ok</string>
     <string name="title_text_check_in">Para efetuar o check-in\n digite seus dados:</string>
 </resources>

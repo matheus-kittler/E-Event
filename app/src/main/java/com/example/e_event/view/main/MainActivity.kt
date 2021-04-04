@@ -3,17 +3,14 @@ package com.example.e_event.view.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_event.R
 import com.example.e_event.adapter.EventAdapter
 import com.example.e_event.databinding.ActivityMainBinding
-import com.example.e_event.model.Event
 import com.example.e_event.util.showAlert
 import com.example.e_event.view.details.DetailActivity
-import com.example.e_event.view.details.DetailViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -80,10 +77,6 @@ class MainActivity : AppCompatActivity() {
                         setNeutralButton(getString(R.string.button_ok), null)
                     }
                 }
-            }
-
-            isLoading.observe(this@MainActivity) {
-
             }
         }
     }

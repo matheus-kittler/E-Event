@@ -20,21 +20,13 @@ class CheckInViewModel(
 
     val checkIn: LiveData<CheckIn> = Transformations.map(checkInResource) {
         return@map it.data
-    }// mostra para o usuário que foi sucedido o checkin
+    }
 
     val name: MutableLiveData<String> = MutableLiveData<String>()
     val email: MutableLiveData<String> = MutableLiveData<String>()
 
     val isError: LiveData<String> = Transformations.map(checkInResource) {
-        if (it.message != null && it.status == Status.ERROR) {
-            return@map it?.message
-        } else {
-            return@map null
-        }
-    }
-
-    val isEnable: LiveData<Boolean> = Transformations.map(name) {
-        return@map it.length == 8
+        return@map it?.status.toString()
     }
 
     val isLoading: LiveData<Boolean> = Transformations.map(checkInResource) {
@@ -48,5 +40,4 @@ class CheckInViewModel(
             }
         }
     }
-
 }

@@ -1,6 +1,7 @@
 package com.example.e_event.view.details
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
@@ -13,6 +14,10 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 private const val KEY_ID = "eventId"
+private const val EVENT = "\nEvento: "
+private const val DATE = "\nData: "
+private const val TICKET = "\nIngresso: "
+private const val LOCAL = "\nLocal: "
 
 class DetailActivity : AppCompatActivity() {
 
@@ -56,40 +61,41 @@ class DetailActivity : AppCompatActivity() {
 
             event.observe(this@DetailActivity) { event ->
 
-                val save: Event? = event
+                val save: Event = event ?: return@observe
 
-                if (save != null) {
-                    binding.tvAddressEvent.apply {
-                        save.latitude?.let { lat ->
-                            save.longitude?.let { lng ->
-                                text = getLocation(lat, lng, this@DetailActivity)
-                            }
+                binding.tvAddressEvent.apply {
+
+                    text = event.latitude.takeIf {
+                        event.latitude != null && event.longitude != null
+                    }?.let {
+                        getLocation(event.latitude!!, event.longitude!!, this@DetailActivity)
+                    }.also {
+                        setOnClickListener {
+                            goGoogleMaps(event.longitude!!, event.latitude!!)
                         }
                     }
+                }
 
 
+                binding.ibCheckIn.setOnClickListener {
+                    val intent = Intent(this@DetailActivity, CheckInActivity::class.java)
+                    intent.putExtra(KEY_ID, save.id)
+                    startActivity(intent)
+                }
 
-                    binding.ibCheckIn.setOnClickListener {
-                        val intent = Intent(this@DetailActivity, CheckInActivity::class.java)
-                        intent.putExtra(KEY_ID, save.id)
-                        startActivity(intent)
-                    }
+                binding.ibShare.setOnClickListener {
+                    var message: String = ""
+                    message += EVENT + binding.tvTitle.text
+                    message += DATE + binding.tvDateNumber.text
+                    message += TICKET + binding.tvPrice.text
+                    message += LOCAL + binding.tvAddressEvent.text
 
-                    binding.ibShare.setOnClickListener {
-                        var message: String = ""
-                        //TODO arrumar isso se der tempo
-                        message += "\nEvento: " + binding.tvTitle.text
-                        message += "\nData: " + binding.tvDate.text
-                        message += "\nIngresso: " + binding.tvPrice.text
-                        message += "\nLocal: " + binding.tvAddressEvent.text
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_SEND
+                    intent.putExtra(Intent.EXTRA_TEXT, message)
+                    intent.type = "text/plain"
 
-                        val intent = Intent()
-                        intent.action = Intent.ACTION_SEND
-                        intent.putExtra(Intent.EXTRA_TEXT, message)
-                        intent.type = "text/plain"
-
-                        startActivity(intent)
-                    }
+                    startActivity(intent)
                 }
             }
 
@@ -105,10 +111,12 @@ class DetailActivity : AppCompatActivity() {
                     }
                 }
             }
-
-            isLoading.observe(this@DetailActivity) {
-
-            }
         }
+    }
+    private fun goGoogleMaps(longitude: Double, latitude: Double) {
+        val uri = "http://maps.google.com/maps?daddr=$latitude,$longitude (Where the event is at)"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        intent.setPackage("com.google.android.apps.maps")
+        startActivity(intent)
     }
 }

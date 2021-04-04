@@ -2,10 +2,7 @@ package com.example.e_event.view.details
 
 
 import android.content.Context
-import android.content.Intent
 import android.location.Geocoder
-import android.os.Bundle
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.*
 import com.example.databindingtest.util.Resource
 import com.example.databindingtest.util.Status
@@ -14,7 +11,6 @@ import com.example.e_event.model.Event
 import com.example.e_event.network.service.backend.IEventService
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlin.reflect.KClass
 
 class DetailViewModel(
     private val service: IEventService,

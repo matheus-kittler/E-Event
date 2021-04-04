@@ -6,8 +6,6 @@ import androidx.databinding.DataBindingUtil
 import com.example.e_event.R
 import com.example.e_event.databinding.ActivityCheckInBinding
 import com.example.e_event.model.User
-import com.example.e_event.util.isValidEmail
-import com.example.e_event.util.isValidName
 import com.example.e_event.util.showAlert
 import kotlinx.android.synthetic.main.activity_check_in.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -44,6 +42,7 @@ class CheckInActivity : AppCompatActivity() {
     private fun setupObserves() {
 
         checkInViewModel.apply {
+
             checkIn.observe(this@CheckInActivity) {
                 if (it != null) {
                     showAlert(
@@ -58,7 +57,7 @@ class CheckInActivity : AppCompatActivity() {
             }
 
             isError.observe(this@CheckInActivity) { error ->
-                if (error != null) {
+                if (error.equals("ERROR")) {
                     showAlert(
                         getString(R.string.title_error),
                         getString(R.string.error)
@@ -69,10 +68,6 @@ class CheckInActivity : AppCompatActivity() {
                     }
                 }
             }
-
-            isLoading.observe(this@CheckInActivity) {
-
-            }
         }
     }
 
@@ -80,14 +75,11 @@ class CheckInActivity : AppCompatActivity() {
         eventId = intent.getSerializableExtra(KEY_ID) as Int?
         val userCheck = User()
 
-        isValidEmail(binding.etEmail.toString())
-        isValidName(binding.etName.toString())
-        eventId
 
         binding.btnConfirm.setOnClickListener {
             userCheck.id = eventId
             userCheck.name = binding.etName.text.toString()
-            userCheck.email = binding.etName.text.toString()
+            userCheck.email = binding.etEmail.text.toString()
             checkInViewModel.setCheckIn(userCheck)
         }
     }

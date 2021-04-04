@@ -74,13 +74,13 @@
             android:id="@+id/btnConfirm"
             android:layout_width="@dimen/width_250"
             android:layout_height="@dimen/height_50"
-            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_15"
             android:background="@drawable/shape_button_confirm"
             android:text="@string/btn_confirm"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etEmail" />
+            app:layout_constraintTop_toBottomOf="@id/etEmail"/>
 
         <ProgressBar
             android:id="@+id/pbLoading"

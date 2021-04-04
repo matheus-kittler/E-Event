@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.example.e_event.view.details.DetailViewModel" />
+
         <import type="android.view.View" />
 
         <variable
@@ -12,51 +13,42 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         tools:context=".view.details.DetailActivity">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clHeader"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ProgressBar
-                    android:id="@+id/pbLoading"
-                    android:visibility="@{detailViewModel.isLoading ? View.VISIBLE : View.GONE}"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/ivPhoto"
                     imageFromUrl="@{detailViewModel.event.image}"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_300"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="@dimen/height_250"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/margin_15"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
                     tools:src="@mipmap/ic_launcher_round" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clBody"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/tvAddressEvent"
@@ -71,7 +63,7 @@
                     android:textSize="@dimen/size_text_14"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivPhoto"
                     tools:text="R. Marcilio Dias, 187" />
 
                 <TextView
@@ -95,7 +87,7 @@
                     android:textSize="@dimen/size_text_20"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tvDate"
+                    app:layout_constraintTop_toBottomOf="@id/tvDateNumber"
                     tools:text="Pepsi OnStage" />
 
                 <ImageButton
@@ -146,7 +138,7 @@
                     tools:text="999,00" />
 
                 <TextView
-                    android:id="@+id/tvDate"
+                    android:id="@+id/tvDateNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_10"
@@ -156,8 +148,18 @@
                     android:textSize="@dimen/size_text_14"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvPrice"
-                    tools:text="18/01/1970" />
+                    tools:text="12/09/1996" />
+
+                <ProgressBar
+                    android:id="@+id/pbLoading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{detailViewModel.isLoading ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

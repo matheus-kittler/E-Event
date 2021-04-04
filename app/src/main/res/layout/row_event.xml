@@ -34,10 +34,15 @@
                 imageFromUrl="@{event.image}"
                 tools:src="@mipmap/ic_launcher_round"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/height_250"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvTitle"
+                android:layout_marginTop="@dimen/margin_5"
+                android:layout_marginStart="@dimen/margin_5"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_marginBottom="@dimen/margin_5"/>
 
             <TextView
                 android:id="@+id/tvPrice"
@@ -45,9 +50,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:textSize="@dimen/size_text_16"
                 android:textColor="@color/colorPrice"
                 app:layout_constraintStart_toEndOf="@id/tvSyphra"
-                app:layout_constraintTop_toBottomOf="@id/tvDescription"
+                app:layout_constraintTop_toBottomOf="@id/tvDateNumber"
                 tools:text="999,00" />
 
             <TextView
@@ -57,56 +63,49 @@
                 android:layout_marginStart="38dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/ticket_value_txt"
-                android:textAlignment="textEnd"
+                android:textSize="@dimen/size_text_16"
                 android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/tvPrice"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDescription" />
+                app:layout_constraintTop_toBottomOf="@id/tvDateNumber" />
 
             <TextView
                 android:id="@+id/tvTitle"
                 android:text="@{event.title}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="5dp"
+                android:layout_marginTop="@dimen/margin_5"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDate"
+                app:layout_constraintTop_toBottomOf="@id/ivPhoto"
                 tools:text="Pepsi OnStage" />
 
             <TextView
-                android:id="@+id/tvDescription"
-                android:text="@{event.description}"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:padding="5dp"
-                android:textAlignment="textStart"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTitle"
-                tools:text="Show da Banda QOTSA" />
-
-
-            <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvDateNumber"
                 android:text="@{@string/format(event.date)}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:padding="10dp"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivPhoto"
+                android:padding="@dimen/margin_5"
+                android:textSize="@dimen/size_text_16"
+                app:layout_constraintStart_toEndOf="@id/tvDate"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
                 tools:text="12/08/1996" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="@string/date_txt"
+                android:textSize="@dimen/size_text_16"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
             <Button
                 android:id="@+id/btnMore"

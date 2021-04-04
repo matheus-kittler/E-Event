@@ -9,8 +9,15 @@
     <dimen name="margin_50">50dp</dimen>
     <dimen name="size_text_20">20sp</dimen>
 
+    <!-- activity_main/ row_event -->
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="size_text_18">18sp</dimen>
+    <dimen name="size_text_12">12sp</dimen>
+    <dimen name="width_100">100dp</dimen>
+    <dimen name="height_100">100dp</dimen>
+
     <!-- activity_detail-->
-    <dimen name="height_300">300dp</dimen>
+    <dimen name="height_250">250dp</dimen>
     <dimen name="padding_8">8dp</dimen>
     <dimen name="padding_2">2dp</dimen>
     <dimen name="size_text_14">14sp</dimen>
