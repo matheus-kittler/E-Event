@@ -1,33 +1,43 @@
 package com.example.e_event.view.check_in
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.databindingtest.util.Resource
+import com.example.databindingtest.util.Status
+import com.example.e_event.dispatcher.IAppDispatchers
 import com.example.e_event.model.CheckIn
-import com.example.e_event.model.People
-import com.example.e_event.network.Network
-import com.example.e_event.network.service.EventAPI
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.e_event.model.User
+import com.example.e_event.network.service.backend.IEventService
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class CheckInViewModel : ViewModel() {
+class CheckInViewModel(
+    private val service: IEventService,
+    private val dispatchers: IAppDispatchers
+) : ViewModel() {
 
-    var currentIdEvent: MutableLiveData<CheckIn> = MutableLiveData<CheckIn>()
-    private val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
+    private val checkInResource: MutableLiveData<Resource<CheckIn>> =
+        MutableLiveData<Resource<CheckIn>>()
 
-    fun checkIn(checkIn: CheckIn) {
-        service.checkInEvent(checkIn).enqueue(object : Callback<CheckIn> {
-            override fun onResponse(call: Call<CheckIn>?, response: Response<CheckIn>?) {
-                if (response != null) {
-                    currentIdEvent.value = response.body()
-                }
+    val checkIn: LiveData<CheckIn> = Transformations.map(checkInResource) {
+        return@map it.data
+    }
+
+    val name: MutableLiveData<String> = MutableLiveData<String>()
+    val email: MutableLiveData<String> = MutableLiveData<String>()
+
+    val isError: LiveData<String> = Transformations.map(checkInResource) {
+        return@map it?.status.toString()
+    }
+
+    val isLoading: LiveData<Boolean> = Transformations.map(checkInResource) {
+        return@map it.status == Status.LOADING
+    }
+
+    fun setCheckIn(checkIn: User) {
+        viewModelScope.launch(dispatchers.io) {
+            service.setCheckIn(checkIn).collect {
+                checkInResource.postValue(it)
             }
-
-            override fun onFailure(call: Call<CheckIn>?, t: Throwable?) {
-                Log.w("Error", "CAIU AQUI")
-            }
-
-        })
+        }
     }
 }

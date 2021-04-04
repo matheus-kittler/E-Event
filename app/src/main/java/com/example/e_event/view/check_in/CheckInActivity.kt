@@ -1,36 +1,30 @@
 package com.example.e_event.view.check_in
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.activity.viewModels
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.databinding.DataBindingUtil
 import com.example.e_event.R
-import com.example.e_event.model.Event
-import com.example.e_event.model.People
-import kotlinx.android.synthetic.main.activity_share.*
-import com.example.e_event.model.CheckIn as CheckIn
+import com.example.e_event.databinding.ActivityCheckInBinding
+import com.example.e_event.model.User
+import com.example.e_event.util.showAlert
+import kotlinx.android.synthetic.main.activity_check_in.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@Suppress("UNREACHABLE_CODE")
+private const val KEY_ID = "eventId"
+
 class CheckInActivity : AppCompatActivity() {
 
-    private val viewModelCheckIn: CheckInViewModel by viewModels()
-    private val checkIn = CheckIn()
+    private val checkInViewModel: CheckInViewModel by viewModel()
+    private lateinit var binding: ActivityCheckInBinding
+    private var eventId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_share)
+        binding = DataBindingUtil
+            .setContentView(this, R.layout.activity_check_in)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val detail: Event = intent.getSerializableExtra("detail") as Event
-
-        btnConfirm.setOnClickListener {
-            setFields()
-            checkIn.id = detail.id
-            viewModelCheckIn.checkIn(checkIn)
-        }
+        setupObserves()
+        setCheckIn()
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -38,9 +32,55 @@ class CheckInActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setFields() {
+    override fun onBackPressed() {
+        super.onBackPressed()
+        eventId = intent.getSerializableExtra(KEY_ID) as Int?
+        intent.putExtra(KEY_ID, eventId)
+        finish()
+    }
 
-        checkIn.name = etName.text.toString()
-        checkIn.email = etEmail.text.toString()
+    private fun setupObserves() {
+
+        checkInViewModel.apply {
+
+            checkIn.observe(this@CheckInActivity) {
+                if (it != null) {
+                    showAlert(
+                        getString(R.string.title_success),
+                        getString(R.string.message)
+                    ) {
+                        setPositiveButton(getString(R.string.button_ok)) { _, _ ->
+                            finish()
+                        }
+                    }
+                }
+            }
+
+            isError.observe(this@CheckInActivity) { error ->
+                if (error.equals("ERROR")) {
+                    showAlert(
+                        getString(R.string.title_error),
+                        getString(R.string.error)
+                    ) {
+                        setPositiveButton(getString(R.string.button_ok)) { _, _ ->
+                            finish()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setCheckIn() {
+        eventId = intent.getSerializableExtra(KEY_ID) as Int?
+        val userCheck = User()
+
+
+        binding.btnConfirm.setOnClickListener {
+            userCheck.id = eventId
+            userCheck.name = binding.etName.text.toString()
+            userCheck.email = binding.etEmail.text.toString()
+            checkInViewModel.setCheckIn(userCheck)
+        }
     }
 }

@@ -1,35 +1,51 @@
 package com.example.e_event.view.details
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+
+import android.content.Context
+import android.location.Geocoder
+import androidx.lifecycle.*
+import com.example.databindingtest.util.Resource
+import com.example.databindingtest.util.Status
+import com.example.e_event.dispatcher.IAppDispatchers
 import com.example.e_event.model.Event
-import com.example.e_event.model.People
-import com.example.e_event.network.Network
-import com.example.e_event.network.service.EventAPI
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.e_event.network.service.backend.IEventService
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(
+    private val service: IEventService,
+    private val dispatchers: IAppDispatchers
+) : ViewModel() {
 
-    var eventId: MutableLiveData<Event> = MutableLiveData<Event>()
-    var error: MutableLiveData<String> = MutableLiveData<String>()
-    val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
+    private val eventResource: MutableLiveData<Resource<Event>> = MutableLiveData<Resource<Event>>()
 
-    fun checkDetails(id: Int) {
-        service.getDetailsEvent(id).enqueue(object : Callback<Event> {
-            override fun onResponse(call: Call<Event>?, response: Response<Event>?) {
-                if (response != null) {
-                    eventId.value = response.body()
-                }
-            }
-
-            override fun onFailure(call: Call<Event>?, t: Throwable?) {
-                error.value = t?.message
-            }
-        })
+    val event: LiveData<Event> = Transformations.map(eventResource) {
+        return@map it.data
     }
 
+    val isError: LiveData<String> = Transformations.map(eventResource) {
+        if (it.message != null && it.status == Status.ERROR) {
+            return@map it?.message
+        } else {
+            return@map null
+        }
+    }
 
+    val isLoading: LiveData<Boolean> = Transformations.map(eventResource) {
+        return@map it.status == Status.LOADING
+    }
+
+    fun getDetails(id: Int) {
+        viewModelScope.launch(dispatchers.io) {
+            service.getEvent(id).collect {
+                eventResource.postValue(it)
+            }
+        }
+    }
+
+    fun getLocation(lat: Double, lng: Double, context: Context): String? {
+        val mGeocoder = Geocoder(context)
+        val address = mGeocoder.getFromLocation(lat, lng, 1)
+        return address[0].getAddressLine(0)
+    }
 }

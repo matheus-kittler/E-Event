@@ -1,10 +1,11 @@
 package com.example.e_event.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 class Event(
-    people: List<People>?,
     @SerializedName("date") var date: Long?,
     @SerializedName("description") var description: String?,
     @SerializedName("image") var image: String?,
@@ -15,12 +16,7 @@ class Event(
     @SerializedName("id") var id: Int?
 ) : Serializable {
 
-    @SerializedName("people")
-    var people: List<People> = listOf()
-
-    init {
-        if (people != null) {
-            this.people = people
-        }
+    fun getPriceEvent(): String {
+        return price.toString().replace(".", ",").replaceAfter("0", "0")
     }
 }

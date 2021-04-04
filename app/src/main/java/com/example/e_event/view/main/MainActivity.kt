@@ -1,101 +1,83 @@
 package com.example.e_event.view.main
 
-import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.view.View
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_event.R
-
 import com.example.e_event.adapter.EventAdapter
-import com.example.e_event.model.Event
+import com.example.e_event.databinding.ActivityMainBinding
+import com.example.e_event.util.showAlert
 import com.example.e_event.view.details.DetailActivity
-import com.example.e_event.view.details.DetailViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.row_event.*
-import kotlinx.android.synthetic.main.row_event.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val KEY_ID = "eventId"
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainActivityViewModel by viewModels()
-    private val viewModelDetail: DetailViewModel by viewModels()
+    private val mainViewModel: MainActivityViewModel by viewModel()
+    private lateinit var binding: ActivityMainBinding
     private val adapter: EventAdapter by lazy {
         EventAdapter(this).apply {
             onIdEventClick = { event, _ ->
-                clLoader.visibility = View.VISIBLE
-                viewModelDetail.checkDetails(event.id!!)
+                event.id?.let { eventId ->
+                    val intent = Intent(this@MainActivity, DetailActivity::class.java)
+                    intent.putExtra(KEY_ID, eventId)
+                    startActivity(intent)
+                }
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil
+            .setContentView(this, R.layout.activity_main)
 
-        clLoader.visibility = View.VISIBLE
+        setupBinding()
+        setupObserves()
+        setupRecyclerView()
+    }
 
-        viewModel.loadEventby()
+    private fun setupBinding() {
+        val activity = this
+        binding.apply {
+            lifecycleOwner = activity
+            viewModel = activity.mainViewModel
+        }
+    }
 
-        val eventObserver = Observer<List<Event>> {
-            adapter.events = it
-            rvEventList.apply {
-                layoutManager =
-                    LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
-                    adapter = this@MainActivity.adapter
-                delayScreen()
+    private fun setupRecyclerView() {
+
+        binding.rvEventList.apply {
+            adapter = this@MainActivity.adapter
+            layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.VERTICAL, false)
+        }
+    }
+
+    private fun setupObserves() {
+
+        mainViewModel.apply {
+
+            loadEvents()
+
+            events.observe(this@MainActivity) {
+                adapter.events = it ?: arrayListOf()
+            }
+
+            isError.observe(this@MainActivity) {
+                if (it != null) {
+                    showAlert(
+                        getString(R.string.title_error),
+                        getString(R.string.error)
+                    ) {
+                        setNeutralButton(getString(R.string.button_ok), null)
+                    }
+                }
             }
         }
-
-        val errorObserver = Observer<String> {
-            alertDialogError(it)
-        }
-
-        val enterInDetailsEvent = Observer<Event> { id ->
-            clLoader.visibility = View.GONE
-            val event: Event = id
-            val intent = Intent(this@MainActivity, DetailActivity::class.java)
-            intent.putExtra("detail", event)
-            startActivity(intent)
-        }
-        viewModel.obj.observe(this, eventObserver)
-        viewModel.error.observe(this, errorObserver)
-        viewModelDetail.eventId.observe(this, enterInDetailsEvent)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        delayScreen()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        delayScreen()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        delayScreen()
-    }
-
-    fun delayScreen() {
-        rvEventList.postDelayed({
-            clLoader.visibility = View.GONE
-        }, 4000)
-    }
-
-    private fun alertDialogError(error: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            .setTitle("Erro!")
-            .setMessage(error)
-            .setNeutralButton("Ok", null).also {
-                it.create().show()
-            }
     }
 }
