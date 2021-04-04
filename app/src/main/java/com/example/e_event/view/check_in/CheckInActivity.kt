@@ -64,6 +64,7 @@ class CheckInActivity : AppCompatActivity() {
                     ) {
                         setPositiveButton(getString(R.string.button_ok)) { _, _ ->
                             finish()
+                            
                         }
                     }
                 }
