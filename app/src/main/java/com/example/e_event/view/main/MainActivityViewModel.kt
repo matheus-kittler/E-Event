@@ -41,9 +41,4 @@ class MainActivityViewModel(
             }
         }
     }
-
-//    fun getEvent() {
-//        val eventId = event?.id ?: return
-//    }
-
 }
