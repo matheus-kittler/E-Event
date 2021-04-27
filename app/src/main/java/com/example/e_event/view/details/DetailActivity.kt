@@ -65,14 +65,14 @@ class DetailActivity : AppCompatActivity() {
         return address[0].getAddressLine(0)
     }
 
-    fun delayScreen() {
+    private fun delayScreen() {
         Handler().postDelayed({
             ivPhoto.visibility = View.VISIBLE
             pbLoading.visibility = View.GONE
         }, 3000)
     }
 
-    fun getDataField() {
+    private fun getDataField() {
         val detail: Event = intent.getSerializableExtra("detail") as Event
         tvAddressEvent.text = getLocation(detail.latitude!!, detail.longitude!!)
         tvTitle.setText(detail.title)

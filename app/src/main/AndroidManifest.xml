@@ -34,7 +34,7 @@
         <activity
             android:name=".view.map.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".view.details.DetailActivity"
+            android:parentActivityName=".view.main.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.check_in.CheckInActivity"

@@ -1,21 +1,21 @@
 package com.example.e_event.view.details
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.e_event.model.Event
-import com.example.e_event.model.People
 import com.example.e_event.network.Network
 import com.example.e_event.network.service.EventAPI
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DetailViewModel : ViewModel() {
+class DetailViewModel(
+    private val service: EventAPI = Network.getInstance(EventAPI::class.java)
+        .build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
+) : ViewModel() {
 
     var eventId: MutableLiveData<Event> = MutableLiveData<Event>()
     var error: MutableLiveData<String> = MutableLiveData<String>()
-    val service: EventAPI = Network.getInstance(EventAPI::class.java).build("http://5f5a8f24d44d640016169133.mockapi.io/api/")
 
     fun checkDetails(id: Int) {
         service.getDetailsEvent(id).enqueue(object : Callback<Event> {
