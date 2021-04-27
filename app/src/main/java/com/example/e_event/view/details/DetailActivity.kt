@@ -27,7 +27,7 @@ import java.util.*
 class DetailActivity : AppCompatActivity() {
 
     private var EVENT : Int = 11
-    private val viewModelDetail: DetailViewModel by viewModels()
+//    private val viewModelDetail: DetailViewModel by viewModels()
     private val adapter: DetailAdapter by lazy {
         DetailAdapter(this)
     }
